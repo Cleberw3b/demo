@@ -1,4 +1,4 @@
-package com.ipayso.local.controller;
+package com.ipayso.controller;
 
 import java.util.Arrays;
 
@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.ipayso.local.constant.Days;
-import com.ipayso.local.constant.Genders;
-import com.ipayso.local.constant.Months;
-import com.ipayso.local.model.User;
-import com.ipayso.local.services.UserService;
+import com.ipayso.constant.Days;
+import com.ipayso.constant.Genders;
+import com.ipayso.constant.Months;
+import com.ipayso.model.User;
+import com.ipayso.services.UserService;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 public class SignUpController {

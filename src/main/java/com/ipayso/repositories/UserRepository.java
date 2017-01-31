@@ -1,8 +1,8 @@
-package com.ipayso.local.repositories;
+package com.ipayso.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.ipayso.local.model.User;
+import com.ipayso.model.User;
 
 public interface UserRepository extends CrudRepository<User, Integer>{
 	

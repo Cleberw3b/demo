@@ -1,10 +1,10 @@
-package com.ipayso.local.services;
+package com.ipayso.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ipayso.local.model.User;
-import com.ipayso.local.repositories.UserRepository;
+import com.ipayso.model.User;
+import com.ipayso.repositories.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService{

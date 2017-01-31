@@ -1,16 +1,17 @@
-package com.ipayso.local.constant;
+package com.ipayso.constant;
 
-public enum Role {
-	USER("User"),
-	ADMIN("Admin");
+public enum Genders {
+	MALE ("Male"), 
+	FAMALE ("Female");
+	
 	
 	private String description;
 	
-	Role (String description){
+	Genders (String description){
 		this.description = description;
 	}
 
 	public String getDescription() {
 		return description;
 	}
-}
+} 

@@ -1,4 +1,4 @@
-package com.ipayso.local.config;
+package com.ipayso.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

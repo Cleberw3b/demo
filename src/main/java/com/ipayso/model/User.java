@@ -1,4 +1,4 @@
-package com.ipayso.local.model;
+package com.ipayso.model;
 
 import javax.persistence.*;
 

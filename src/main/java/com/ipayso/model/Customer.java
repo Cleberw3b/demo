@@ -1,10 +1,6 @@
-package com.ipayso.local.model;
+package com.ipayso.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 

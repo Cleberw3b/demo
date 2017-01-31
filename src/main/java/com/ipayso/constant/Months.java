@@ -1,4 +1,4 @@
-package com.ipayso.local.constant;
+package com.ipayso.constant;
 
 public enum Months {
 	

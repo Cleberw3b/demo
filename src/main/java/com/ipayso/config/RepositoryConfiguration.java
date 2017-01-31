@@ -1,4 +1,4 @@
-package com.ipayso.local.config;
+package com.ipayso.config;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

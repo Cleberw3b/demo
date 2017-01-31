@@ -1,6 +1,6 @@
-package com.ipayso.local.services;
+package com.ipayso.services;
 
-import com.ipayso.local.model.User;
+import com.ipayso.model.User;
 
 public interface UserService {
 	Iterable<User> listAllUsers();

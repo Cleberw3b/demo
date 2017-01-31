@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.ipayso</groupId>
-	<artifactId>local</artifactId>
+	<groupId>devipayso</groupId>
+	<artifactId>devipayso</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>demo</name>
+	<name>devipayso</name>
 
 	<description>Project I Pay So</description>
 
@@ -81,14 +81,19 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.4-1206-jdbc42</version>
+			<version>9.4-1206-jdbc42</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 	</dependencies>
 
 	<profiles>
 		<profile>
+			<!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
+			<!-- Use this profile for any OpenShift specific customization your app will need. -->
+			<!-- By default that is to put the resulting archive into the 'deployments' folder. -->
+			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+			<id>openshift</id>
 			<build>
-				<finalName>local</finalName>
+				<finalName>devipayso</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -103,7 +108,7 @@
 				</plugins>
 			</build>
 		</profile>
-	</profiles>
+	</profiles>	
 
 
 </project>

@@ -1,4 +1,4 @@
-package com.ipayso.local.controller;
+package com.ipayso.controller;
 
 import javax.validation.Valid;
 
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ipayso.local.model.Login;
-import com.ipayso.local.model.User;
-import com.ipayso.local.services.UserService;
+import com.ipayso.model.Login;
+import com.ipayso.model.User;
+import com.ipayso.services.UserService;
 
 @Controller
 public class LoginController {
