@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+	<title>Sign up to your account ipayso</title>
+	<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12 top-menu-bar">
+				<div class="logo-ipayso">
+					<img src="../static/images/logo-ipayso.png" th:src="@{images/logo-ipayso.png}" alt="logo ipayso"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid account-page">
+		<div class="row">
+			<div
+				class="col-md-push-1 col-lg-push-1 col-xs-12 col-sm-12 col-md-3 col-lg-3 edit-account">
+				<h1 class="edit-account-header">EDIT MY ACCOUNT</h1>
+				<div class="account-menu">
+					<ul>
+						<li><a href="#">Reset password</a></li>
+						<li><a href="#">Check account current</a></li>
+						<li><a href="#">Reset PIN</a></li>
+						<li><a href="#">Change Bank Account</a></li>
+					</ul>
+				</div>
+				<div class="bind-account">
+					<h3>Bind my account</h3>
+					<div class="bind-icon">
+						<div class="google-icon">
+							<a href="#"><img src="../images/g-plus-logo.png" alt="bind google account"></a>
+						</div>
+						<div class="facebook-icon">
+							<a href="#"><img src="../images/facebook-logo.png" alt="bind facebook account"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div
+				class="col-md-push-2 col-lg-push-2 col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<h2 class="form-ipayso">My account</h2>
+				<div class='signup'>
+					<form>
+						<div class="ips-login">
+							<input type='text' placeholder='E-mail (as username)' />
+						</div>
+						<div class="ips-pass">
+							<input type='text' placeholder='Password' />
+						</div>
+						<div class="ips-pass">
+							<input type='text' placeholder='Confirm password' />
+						</div>
+						<div class="h-input">Date of birth:</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<select class="f-select" id="sel1">
+									<option placeholder='Month' value="Month">Month</option>
+									<option value="January">January</option>
+									<option value="February">February</option>
+									<option value="March">March</option>
+									<option value="April">April</option>
+									<option value="May">May</option>
+									<option value="June">June</option>
+									<option value="July">July</option>
+									<option value="August">August</option>
+									<option value="September">September</option>
+									<option value="October">October</option>
+									<option value="November">November</option>
+									<option value="December">December</option>
+								</select>
+							</div>
+							<div class="col-lg-4">
+								<select class="f-select" id="sel2">
+									<option placeholder='Day' value="Day">Day</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+									<option value="13">13</option>
+									<option value="14">14</option>
+									<option value="15">15</option>
+									<option value="16">16</option>
+									<option value="17">17</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="31">31</option>
+								</select>
+							</div>
+							<div class="col-lg-4">
+								<span class="f-year"></span><input type='text' maxlength="4"
+									placeholder='Year' />
+							</div>
+						</div>
+						<div class="row radio-margin">
+							<div class="col-lg-6">
+								<label class="f-radio"> <input name="radio" type="radio"
+									value="Male" /> Male
+								</label>
+							</div>
+							<div class="col-lg-6">
+								<label class="f-radio"> <input name="radio" type="radio"
+									value="Female" /> Female
+								</label>
+							</div>
+						</div>
+						<div class="ips-country">
+							<input type='text' placeholder='Country' />
+						</div>
+						<div class="ips-bank">
+							<input type='text' placeholder='Bank' />
+						</div>
+						<div class="ips-iban">
+							<input type='text' placeholder='Bank account#' />
+						</div>
+						<div class="h-input">User password hint question 1:</div>
+						<input type='text' placeholder='User password hint question 1' />
+						<div class="h-input">User password hint question 2:</div>
+						<input type='text' placeholder='User password hint question 2' />
+						<button type="submit" class="btn btn-default">SAVE</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--/*/ <th:block th:include="fragments/scripts :: scripts"></th:block> /*/-->
+</body>
+</html>
