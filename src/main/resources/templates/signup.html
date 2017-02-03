@@ -57,7 +57,7 @@
 								<select class="f-select" id="sel1" th:field="*{month}">
 									<option placeholder="#{label.signup.month}"
 											th:each="month : ${months}" 
-									        th:value="${month}" 
+									        th:value="${month.description}" 
 									        th:text="${month.description}">Month</option>
 								</select>
 							</div>
@@ -65,7 +65,7 @@
 								<select class="f-select" id="sel2" th:field="*{day}">
 									<option placeholder="#{label.signup.day}"
 											th:each="day : ${days}" 
-									        th:value="${day}" 
+									        th:value="${day.description}" 
 									        th:text="${day.description}">Day</option>
 								</select>
 							</div>

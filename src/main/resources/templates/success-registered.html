@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-<title>You have successfully registered!</title>
-<!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+	<title>You have successfully registered!</title>
+	<!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+	
 </head>
 <body>
 	<div class="container-fluid">
@@ -15,7 +16,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid account-page">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 banner-sign-up">
 				<h1 class="banner-header">Payment via your mobile</h1>
@@ -25,7 +26,26 @@
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<div class="signup">
 					<h1 class="success-registered">You have successfully registered!</h1>
-					<div class="btn btn-default btn-login view-account">View my account</div>
+					<form >
+		                <div >
+		                    <label>User Id:</label>
+		                    <div >
+		                        <p  th:text="${user.id}">user Id</p></div>
+		                </div>
+		                <div >
+		                    <label >Email:</label>
+		                    <div >
+		                        <p th:text="${user.email}">Email</p>
+		                    </div>
+		                </div>
+		                <div >
+		                    <label >Birthday:</label>
+		                    <div >
+		                        <p th:text="${user.day + '/' + user.month + '/' + user.year}">Birthday</p>
+		                    </div>
+		                </div>
+		            </form>
+					<div class="btn btn-default btn-login view-account"><a th:href="${ '/edit/' + user.id}">View my account</a></div>
 				</div>
 			</div>
 		</div>

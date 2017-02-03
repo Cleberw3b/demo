@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  
 @Configuration
 @EnableAutoConfiguration
-@EntityScan(basePackages = {"com.ipayso.local.model"})
-@EnableJpaRepositories(basePackages = {"com.ipayso.local.repositories"})
+@EntityScan(basePackages = {"com.ipayso.model"})
+@EnableJpaRepositories(basePackages = {"com.ipayso.repositories"})
 @EnableTransactionManagement
 public class RepositoryConfiguration {
 	

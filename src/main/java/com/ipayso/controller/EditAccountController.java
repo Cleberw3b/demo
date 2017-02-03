@@ -14,7 +14,6 @@ import com.ipayso.services.UserService;
 public class EditAccountController {
 	
 	private UserService userService;
-	private String passwordConfirm;
 	
     @Autowired
     public void setUserService(UserService userService) {
@@ -27,13 +26,4 @@ public class EditAccountController {
     	model.addAttribute("userLogin", userService.getUserById(id));
         return mv;
     }
-    
-
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
 } 
