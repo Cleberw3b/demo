@@ -1,5 +1,10 @@
 package com.ipayso.util.enums;
 
+/**
+ * Years.class -> Enum for Years
+ * @author Cleber Oliveira
+ * @version 1.0
+ */
 public enum Years {
 
 	Year1920("1920"),
@@ -101,6 +106,9 @@ public enum Years {
 	Year2016("2016");
 
 
+	/**
+	 * Create a description to get the enum's description
+	 */
 	private String description;
 
 	Years (String description){

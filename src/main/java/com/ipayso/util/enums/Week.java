@@ -1,6 +1,11 @@
 package com.ipayso.util.enums;
 
-public enum WeekDays {
+/**
+ * Week.class -> Enum for Week
+ * @author Cleber Oliveira
+ * @version 1.0
+ */
+public enum Week {
 	SUNDAY("Sunday"),
 	MONDAY("Monday"),
 	TUESDAY("Tuesday"),
@@ -11,7 +16,7 @@ public enum WeekDays {
 	
 	private String description;
 	
-	WeekDays (String description){
+	Week (String description){
 		this.description = description;
 	}
 
