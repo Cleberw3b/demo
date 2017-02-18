@@ -28,20 +28,22 @@
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<h2 class="form-ipayso">Log in to your account</h2>
 				<div class='signup'>
-					<form>
+					<form th:object="${login}" th:action="@{/login}" method="post">
 						<div class="alert alert-danger" th:if="${not #strings.isEmpty(msg)}">
            					<span th:text="${msg}"></span>
            				</div>
 						<div class="ips-login">
-							<input type='text' placeholder='E-mail (as username)' />
+							<input name="username" type='text' placeholder='E-mail (as username)' />
 						</div>
 
 						<div class="ips-pass">
-							<input type='text' placeholder='Password' />
+							<input name="password" type='password' placeholder='Password' />
 						</div>
 						<div class="forgot-pass">
 							<a href="#">Forgot password? </a>
 						</div>
+						
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<button type="submit" class="btn btn-default">LOG IN</button>
 					</form>
 				</div>

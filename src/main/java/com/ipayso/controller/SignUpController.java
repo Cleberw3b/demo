@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ipayso.constant.Days;
-import com.ipayso.constant.Genders;
-import com.ipayso.constant.Months;
 import com.ipayso.model.User;
 import com.ipayso.services.UserService;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.ipayso.services.security.SecurityService;
+import com.ipayso.util.enums.Countries;
+import com.ipayso.util.enums.Days;
+import com.ipayso.util.enums.Genders;
+import com.ipayso.util.enums.Months;
+import com.ipayso.util.enums.Years;
 
 @Controller
 public class SignUpController {
@@ -32,7 +33,14 @@ public class SignUpController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-  	 }
+  	}
+    
+    private SecurityService securityService;
+    
+    @Autowired
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
+  	}
 	
     @RequestMapping(value = "/signup",  method = RequestMethod.GET)
     public ModelAndView newSignUp(User user){
@@ -40,6 +48,8 @@ public class SignUpController {
     	mv.addObject("genders", Arrays.asList(Genders.values()));
     	mv.addObject("months", Arrays.asList(Months.values()));
     	mv.addObject("days", Arrays.asList(Days.values()));
+    	mv.addObject("years", Arrays.asList(Years.values()));
+    	mv.addObject("countries", Arrays.asList(Countries.values()));
     	mv.addObject("passwordConfirm", "");
         return mv;
     }
@@ -52,10 +62,9 @@ public class SignUpController {
     	if (userResult.hasErrors()){
 			return newSignUp(user);
     	}
-    	
-    	user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
     	try {
-    		user =  userService.saveUser(user);
+    		user =  userService.saveOrUpdate(user);
+    		securityService.autologin(user.getEmail(), user.getPasswordConfirm());
 		} catch (RuntimeException e) {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
@@ -63,14 +72,14 @@ public class SignUpController {
 				return newSignUp(user);
             }
 		}
-    	ModelAndView mv = new ModelAndView("redirect:/success-registered/" + String.valueOf(user.getId()));
+    	ModelAndView mv = new ModelAndView("redirect:/success/" + String.valueOf(user.getId()));
     	return mv;
     }
     
-    @RequestMapping("/success-registered/{id}")
+    @RequestMapping("/success/{id}")
     public String sucess(@PathVariable Integer id, Model model){
-    	model.addAttribute("user", userService.getUserById(id));
-    	return "/success-registered";
+    	model.addAttribute("user", userService.getById(id));
+    	return "/success";
     }
    
 }

@@ -2,7 +2,6 @@ package com.ipayso.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,10 +19,10 @@ public class EditAccountController {
         this.userService = userService;
   	 }
 	
-    @RequestMapping(value = "/edit-my-account/{id}",  method = RequestMethod.GET)
-    public ModelAndView editUserLogin(@PathVariable Integer id, Model model){
-    	ModelAndView mv = new ModelAndView("edit-my-account");
-    	model.addAttribute("userLogin", userService.getUserById(id));
+    @RequestMapping(value = "/editMyAccount/{id}",  method = RequestMethod.GET)
+    public ModelAndView editUserLogin(@PathVariable Integer id){
+    	ModelAndView mv = new ModelAndView("editMyAccount");
+    	mv.addObject("userLogin", userService.getById(id));
         return mv;
     }
 } 
