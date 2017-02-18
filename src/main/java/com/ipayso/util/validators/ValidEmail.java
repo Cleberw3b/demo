@@ -14,6 +14,16 @@ import javax.validation.Payload;
 
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 
+/**
+ * ValidEmail.class -> Here create a Annotation as @ValidEmail to validate e-mail on field which will be validated by EmailValidator
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see EmailValidator
+ * @see @Target
+ * @see @Retention
+ * @see @Constraint
+ * @see @Documented
+ */
 @Target({TYPE, FIELD, ANNOTATION_TYPE}) 
 @Retention(RUNTIME)
 @Constraint(validatedBy = EmailValidator.class)
