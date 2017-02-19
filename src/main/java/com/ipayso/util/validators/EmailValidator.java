@@ -3,8 +3,6 @@ package com.ipayso.util.validators;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -39,26 +37,14 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 	}
 	
 	/**
-	 * Create InternetAddress object and validated the supplied
-	 * address which in this case is an email address.
+	 * Use a Regex pattern to validate a string as e-mail
 	 * @return true if String is a valid email
 	 * 		   false if it is not
-	 * @see InternetAddress
-	 * @throws AddressException
+	 * @see Pattern
 	 */
 	private boolean validateEmail(String email) {
-		//boolean isValid = false;
 		pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);
         return matcher.matches();
-		/*try {
-			InternetAddress internetAddress = new InternetAddress(email);
-			internetAddress.validate();
-			isValid = true;
-		} catch (AddressException e) {
-			System.out.println("You are in catch block -- Exception Occurred for: " + email);
-		}
-		return isValid;*/
-
 	}
 }
