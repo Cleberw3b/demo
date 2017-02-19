@@ -97,7 +97,7 @@ public class EditAccountController {
 			return editUserLogin(user);
 		}
 		user =  userService.saveOrUpdate(user);
-		ModelAndView mv = new ModelAndView("redirect:/success/" + String.valueOf(user.getId()));
+		ModelAndView mv = new ModelAndView("redirect:/success");
 		return mv;
 	}
 } 
