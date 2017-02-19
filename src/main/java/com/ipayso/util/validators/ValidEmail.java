@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import com.ipayso.util.validators.EmailValidator;
 
 /**
  * ValidEmail.class -> Here create a Annotation as @ValidEmail to validate e-mail on field which will be validated by EmailValidator

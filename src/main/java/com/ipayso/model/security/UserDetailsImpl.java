@@ -1,4 +1,4 @@
-package com.ipayso.services.security;
+package com.ipayso.model.security;
 
 import java.util.Collection;
 

@@ -1,5 +1,10 @@
 package com.ipayso.util.enums;
 
+/**
+ * Countries.class -> Enum for Countries
+ * @author Cleber Oliveira
+ * @version 1.0
+ */
 public enum Countries {
 
 	AE("United Arab Emirates"),
@@ -116,9 +121,11 @@ public enum Countries {
 	VI("U.S. Virgin Islands"),
 	ZA("South Africa");
 
-
+	/**
+	 * Create a description to get the enum's description
+	 */
 	private String description;
-
+	
 	Countries (String description){
 		this.description = description;
 	}

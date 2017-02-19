@@ -1,5 +1,10 @@
 package com.ipayso.util.enums;
 
+/**
+ * Days.class -> Enum for Days
+ * @author Cleber Oliveira
+ * @version 1.0
+ */
 public enum Days {
 
 	ONE("1"),
@@ -34,7 +39,9 @@ public enum Days {
 	THIRTY("30"),
 	THIRTY_ONE("31");
 
-
+	/**
+	 * Create a description to get the enum's description
+	 */
 	private String description;
 
 	Days (String description){

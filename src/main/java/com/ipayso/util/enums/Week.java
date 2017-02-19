@@ -14,6 +14,9 @@ public enum Week {
 	FRIDAY("Friday"),
 	SATURDAY("Saturday");
 	
+	/**
+	 * Create a description to get the enum's description
+	 */
 	private String description;
 	
 	Week (String description){

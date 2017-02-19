@@ -10,11 +10,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+/**
+ * SecurityServiceImpl.class -> This Service offers a SecurityService implementation to make some security features.
+ * 								This class provides ways to authenticate users and get the user logged on the system. 
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see SecurityService
+ */
 @Service
 public class SecurityServiceImpl implements SecurityService{
 	
     private AuthenticationManager authenticationManager;
-
+    
+    /**
+	 * Injects AuthenticationManager to provide a manager to organize the authentication
+	 * @see AuthenticationManager
+	 */
     @Autowired
     public void setAuthenticationManager(AuthenticationManager authenticationManager){
     	this.authenticationManager = authenticationManager;
@@ -22,6 +33,10 @@ public class SecurityServiceImpl implements SecurityService{
     
     private UserDetailsService userDetailsService;
     
+    /**
+	 * Injects UserDetailsService in order to use its methods
+	 * @see UserDetailsServiceImpl
+	 */
     @Autowired
     public void setUserDetailsService(UserDetailsService userDetailsService){
     	this.userDetailsService = userDetailsService;
@@ -29,6 +44,11 @@ public class SecurityServiceImpl implements SecurityService{
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
     
+    /**
+	 * This method implements findLoggedInUsername to get the UserDetails which in currently logged into the system
+	 * @see SecurityContextHolder
+	 * @see UserDetails
+	 */
     @Override
     public String findLoggedInUsername() {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
@@ -39,6 +59,14 @@ public class SecurityServiceImpl implements SecurityService{
         return null;
     }
     
+    /**
+	 * This method implements autologin to log an User using the e-mail and password, an UserDetailsService load the UserDetails them an
+	 * authentication Manager will authenticate the UserDetails as a Token, if logged successfully the method will return true otherwise
+	 * will be false.
+	 * @see UserDetailsService
+	 * @see UsernamePasswordAuthenticationToken
+	 * @see AuthenticationManager
+	 */
     @Override
     public boolean autologin(String email, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
