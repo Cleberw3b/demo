@@ -63,10 +63,12 @@ public class EditAccountController {
 	public ModelAndView editUserLogin(User userParam){
 		ModelAndView mv = new ModelAndView("editMyAccount");
 		User user = userParam;
-		if(user.getEmail() == null || user.getEmail().isEmpty()){
+		if(user == null || user.getEmail() == null || user.getEmail().isEmpty()){
 			user = userService.getUserByEmail(securityService.findLoggedInUsername());
 		}
-		user.setPassword(""); user.setPasswordConfirm("");
+		user.setPassword("");
+		user.setPasswordConfirm("");
+		mv.addObject("user", user);
 		mv.addObject("genders", Arrays.asList(Genders.values()));
 		mv.addObject("months", Arrays.asList(Months.values()));
 		mv.addObject("days", Arrays.asList(Days.values()));
@@ -86,7 +88,7 @@ public class EditAccountController {
 	 * @see ModelAndView
 	 * @see @RequestMapping
 	 */
-	@RequestMapping(value = "editMyAccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/editMyAccount", method = RequestMethod.POST)
 	public ModelAndView updateUser(@Valid User user, BindingResult userResult, RedirectAttributes attributes){
 		if (!user.getPassword().equals(user.getPasswordConfirm())){
 			userResult.addError(new ObjectError("msg", "Password must match"));

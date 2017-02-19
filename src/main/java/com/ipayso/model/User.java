@@ -1,13 +1,26 @@
 package com.ipayso.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.ipayso.util.validators.ValidEmail;
+
+/**
+ * User.class -> This class is the User model which has all the User Information for business purpose,
+ * 				 it extends AbstractModelClass to inherit its attributes and methods. All attributes are
+ * 				 columns on database but passwordConfirm annotated as @Transient which make the DB don't
+ * 				 see this attribute.
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see AbstractModelClass
+ * @see @Entity
+ * @see @Table
+ */
 @Entity
 @Table(name = "userLogin")
 public class User extends AbstractModelClass{
@@ -18,53 +31,44 @@ public class User extends AbstractModelClass{
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "email",  unique = true)
-	@Email
+	@ValidEmail
 	@NotBlank (message = "E-mail Required")
 	String email;
 	
-	@Column(name = "user_password")
 	@NotBlank (message = "Password Required")
 	private String password;
 	
 	@Transient
 	private String passwordConfirm;
 	
-	@Column(name = "user_day")
 	@NotBlank (message = "Day Required")
 	private String day;
 	
-	@Column(name = "user_month")
 	@NotBlank (message = "Month Required")
 	private String month;	
 	
-	@Column(name = "user_year",  length = 30)
 	@NotBlank (message = "Year Required")
 	private String year;
 
-	@Column(name = "user_gender",  length = 30)
 	@NotBlank (message = "Gender Required")
 	private String gender;
 	
-	@Column(name = "user_role",  length = 30)
 	private String role;
 	
-	@Column(name = "user_country",  length = 30)
 	@NotBlank (message = "Country Required")
 	private String country;
 	
-	@Column(name = "user_bank",  length = 30)
 	@NotBlank (message = "Bank Required")
 	private String bank;
 	
-	@Column(name = "user_bank_acc", length = 30)
 	@NotBlank (message = "Bank Account Required")
 	private String bank_acc;
 	
-	@Column(name = "user_enabled", length = 30)
-	private Boolean enabled = true;
+	private String question1;
 	
-	/*@OneToOne(mappedBy="userLogin", cascade = CascadeType.ALL)
-	private Customer customer;*/
+	private String question2;
+	
+	private Boolean enabled = true;
 
 	public String getEmail() {
 		return email;
@@ -160,5 +164,21 @@ public class User extends AbstractModelClass{
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getQuestion1() {
+		return question1;
+	}
+
+	public void setQuestion1(String question1) {
+		this.question1 = question1;
+	}
+
+	public String getQuestion2() {
+		return question2;
+	}
+
+	public void setQuestion2(String question2) {
+		this.question2 = question2;
 	}
 }

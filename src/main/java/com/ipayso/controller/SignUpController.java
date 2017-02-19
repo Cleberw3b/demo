@@ -106,7 +106,7 @@ public class SignUpController {
 				return newSignUp(user);
             }
 		}
-    	ModelAndView mv = new ModelAndView("redirect:/success/" + String.valueOf(user.getId()));
+    	ModelAndView mv = new ModelAndView("redirect:/success");
     	return mv;
     }
     

@@ -1,5 +1,11 @@
 package com.ipayso.model.security;
 
+/**
+ * UserDetailsImpl.class -> This class implements an UserDetails for authentication purposes 
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see UserDetails
+ */
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
