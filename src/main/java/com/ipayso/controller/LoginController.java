@@ -22,6 +22,7 @@ public class LoginController {
 	public String login(Model model, String error) {
         if (error != null)
             model.addAttribute("msg", "Your username or password is invalid.");
+        	System.out.println(error);
         return "login";
     }
 }

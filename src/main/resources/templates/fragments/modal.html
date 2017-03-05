@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" >
+</head>
+<body th:fragment="bugReportModal">
+	
+	<!-- Button trigger Report Bug modal -->
+
+	<div class="col-md-6">
+		<button type="button" class="btn btn-bugReport" data-toggle="modal" data-target="#bugReportModal">Report a Bug</button>		
+	</div>
+	
+	<!-- Modal -->
+	<form th:object="${bug}" th:action="@{/bugReport}" method="post">
+		<div class="modal fade" id="bugReportModal" tabindex="-1" role="dialog" aria-labelledby="bugReportModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="bugReportModalLabel">Modal title</h4>
+					</div>
+					<div class="modal-body">
+						<div class="">
+							<textarea placeholder='E-mail (as username)' th:field="*{description}" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-default">Report</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	</form>
+</body>
+</html>

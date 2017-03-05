@@ -20,27 +20,19 @@ import com.ipayso.util.enums.Role;
 @Service
 public class UserServiceImpl implements UserService{
 	
-	private UserRepository userRepository;
-	
 	/**
 	 * Injects UserRepository to make transactions on database
 	 * @see UserRepository
 	 */
+	@Autowired
+	private UserRepository userRepository;
+	
+	 /**
+     * Injects BCryptPasswordEncoder to encode strings
+     * @see BCryptPasswordEncoder
+     */
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-  	 }
-    
     private BCryptPasswordEncoder encoderService;
-    
-    /**
-	 * Injects BCryptPasswordEncoder to encode strings
-	 * @see BCryptPasswordEncoder
-	 */
-    @Autowired
-    public void setEncryptionService(BCryptPasswordEncoder encryptionService) {
-        this.encoderService = encryptionService;
-    }
     
     /**
      * Get an User by its e-mail
@@ -80,9 +72,17 @@ public class UserServiceImpl implements UserService{
      */
 	@Override
 	public User saveOrUpdate(User user) {
-		if(user.getPassword() != null){
-			user.setPassword(encoderService.encode(user.getPassword()));
-        }
+		return userRepository.save(user);
+	}
+	
+	/**
+	 * Save or Update an user and return it updated 
+	 * @param User
+	 * @return User
+	 */
+	@Override
+	public User newUser(User user) {
+		user.setPassword(encoderService.encode(user.getPassword()));
 		user.setRole(Role.USER.name());
 		return userRepository.save(user);
 	}

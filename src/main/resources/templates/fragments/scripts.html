@@ -3,10 +3,22 @@
 <head lang="en" >
 </head>
 <body th:fragment="scripts">
-	<div class="copyright">© 2017 - IPaySo. All rights reserved.</div>
+	<div class="copyright col-md-6">© 2017 - IPaySo. All rights reserved.</div>
+
+	<div class="col-md-6">
+		<button type="button" class="btn btn-bugReport" id="bugReportButton">Report a Bug</button>		
+	</div>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	
-	<script src="../static/js/bootstrap.min.js" 
-			th:src="@{js/bootstrap.min.js}"></script>
+	<script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+	
+	<script th:inline="javascript">
+		$(document).ready(function(){
+		    $('#bugReportButton').click(function(){
+		        window.location= "/devipayso-1.0/bugReport";
+		    });
+		});
+	</script>
 </body>
 </html>

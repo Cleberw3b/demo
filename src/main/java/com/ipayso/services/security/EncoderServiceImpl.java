@@ -15,16 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class EncoderServiceImpl implements EncoderService {
 
-	private BCryptPasswordEncoder encoderService;
 	
 	/**
 	 * Injects BCryptPasswordEncoder to use encryption methods to check and encode strings
 	 * @see AuthenticationManager
 	 */
-    @Autowired
-    public void setEncryptionService(BCryptPasswordEncoder encryptionService) {
-        this.encoderService = encryptionService;
-    }
+	@Autowired
+	private BCryptPasswordEncoder encoderService;
 	
     /**
 	 * This method encodes a String 

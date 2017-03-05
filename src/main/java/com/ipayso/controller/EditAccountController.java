@@ -89,11 +89,11 @@ public class EditAccountController {
 	 * @see @RequestMapping
 	 */
 	@RequestMapping(value = "/editMyAccount", method = RequestMethod.POST)
-	public ModelAndView updateUser(@Valid User user, BindingResult userResult, RedirectAttributes attributes){
+	public ModelAndView updateUser(@Valid User user, BindingResult result, RedirectAttributes attributes){
 		if (!user.getPassword().equals(user.getPasswordConfirm())){
-			userResult.addError(new ObjectError("msg", "Password must match"));
+			result.addError(new ObjectError("msg", "Password must match"));
 		}
-		if (userResult.hasErrors()){
+		if (result.hasErrors()){
 			return editUserLogin(user);
 		}
 		user =  userService.saveOrUpdate(user);

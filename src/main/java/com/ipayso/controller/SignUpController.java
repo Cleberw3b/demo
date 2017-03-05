@@ -6,23 +6,24 @@ import java.util.Arrays;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ipayso.model.User;
 import com.ipayso.services.UserService;
-import com.ipayso.services.security.SecurityService;
 import com.ipayso.util.enums.Countries;
 import com.ipayso.util.enums.Days;
 import com.ipayso.util.enums.Genders;
 import com.ipayso.util.enums.Months;
 import com.ipayso.util.enums.Years;
+import com.ipayso.util.event.OnRegistrationCompleteEvent;
 
 /**
  * SignUpController.class -> This Controller offers a URL filter to map requests for signup page 
@@ -33,29 +34,19 @@ import com.ipayso.util.enums.Years;
 @Controller
 public class SignUpController {
 	
-	private UserService userService;
-	
 	/**
 	 * Injects an UserService implementation into userService variable
-	 * @param userService
 	 * @see UserService
 	 */
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-  	}
+	@Autowired
+	private UserService userService;
     
-    private SecurityService securityService;
-    
-    /**
-	 * Injects an SecurityService implementation into securityService variable
-	 * @param securityService
-	 * @see SecurityService
+	/**
+	 * Injects an ApplicationEventPublisher implementation to notify listeners
+	 * @see ApplicationEventPublisher
 	 */
-    @Autowired
-    public void setSecurityService(SecurityService securityService) {
-        this.securityService = securityService;
-  	}
+	@Autowired
+	private ApplicationEventPublisher eventPublisher;
 	
     /**
      * When filter captures a signup URL request this method is called to add objects on the view side 
@@ -78,7 +69,7 @@ public class SignUpController {
     
     /**
      * When signup form is sent to action this method execute a password confirmation and validate the User,
-     * if some error is caught we use a result to add errors messages and show it on view. After all the validation
+     * if some error is caught, errors messages will be displayed on view. After all the validation
      * we try to save this new user on database, in case of an existent e-mail it will catch a exception and say e-mail
      * already registered. When registered the user will be auto logged and redirected to an successful page.
      * @param user
@@ -89,7 +80,7 @@ public class SignUpController {
      * @see @RequestMapping
      */
     @RequestMapping(value = "signup", method = RequestMethod.POST)
-    public ModelAndView saveUser(@Valid User user, BindingResult userResult, RedirectAttributes attributes){
+    public ModelAndView saveUser(@Valid User user, BindingResult userResult, RedirectAttributes attributes, WebRequest request){
     	if (!user.getPassword().equals(user.getPasswordConfirm())){
     		userResult.addError(new ObjectError("msg", "Password must match"));
     	}
@@ -97,8 +88,8 @@ public class SignUpController {
 			return newSignUp(user);
     	}
     	try {
-    		user =  userService.saveOrUpdate(user);
-    		securityService.autologin(user.getEmail(), user.getPasswordConfirm());
+    		user =  userService.newUser(user);
+    		eventPublisher.publishEvent(new OnRegistrationCompleteEvent (user, request.getLocale(), request.getContextPath()));
 		} catch (RuntimeException e) {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
@@ -106,20 +97,13 @@ public class SignUpController {
 				return newSignUp(user);
             }
 		}
-    	ModelAndView mv = new ModelAndView("redirect:/success");
-    	return mv;
+    	return successRegistration(user);
     }
     
-    /**
-     * Renders the success page with the current user information
-     * @param id
-     * @param model
-     * @return
-     */
-    @RequestMapping("/success")
-    public String sucess(Model model){
-    	model.addAttribute("user", userService.getUserByEmail(securityService.findLoggedInUsername()));
-    	return "/success";
-    }
-   
+	@RequestMapping(value = "/success" , method = RequestMethod.GET)
+	public ModelAndView successRegistration(User user){
+		ModelAndView mv = new ModelAndView("/success");
+		mv.addObject("user", user);
+		return mv;
+	}
 }

@@ -68,7 +68,7 @@ public class User extends AbstractModelClass{
 	
 	private String question2;
 	
-	private Boolean enabled = true;
+	private Boolean enabled = false;
 
 	public String getEmail() {
 		return email;

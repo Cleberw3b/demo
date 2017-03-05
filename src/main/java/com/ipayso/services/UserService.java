@@ -1,14 +1,12 @@
 package com.ipayso.services;
 
-import org.springframework.data.repository.CrudRepository;
-
 import com.ipayso.model.User;
 
 /**
  * UserService.class -> This interface extends all methods from CRUDService and assign a specific method to get an User by its email
  * @author Cleber Oliveira
  * @version 1.0
- * @see CrudRepository
+ * @see CRUDService
  * @see User
  */
 public interface UserService extends CRUDService<User>{
@@ -19,5 +17,7 @@ public interface UserService extends CRUDService<User>{
 	 * @return User
 	 */
     User getUserByEmail(String email);
+    
+    User newUser(User user);
 
 }
