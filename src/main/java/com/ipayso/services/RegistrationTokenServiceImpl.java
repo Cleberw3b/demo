@@ -3,6 +3,7 @@ package com.ipayso.services;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,7 @@ public class RegistrationTokenServiceImpl implements RegistrationTokenService{
 	}
 	
 	@Override
-	public RegistrationToken findByToken(String token){
+	public RegistrationToken getByToken(String token){
 		return registrationTokenRepository.findByToken(token);
 	}
 	
@@ -77,6 +78,14 @@ public class RegistrationTokenServiceImpl implements RegistrationTokenService{
 		RegistrationToken myToken = new RegistrationToken(token, user);
 		return registrationTokenRepository.save(myToken);
 	}
+	
+	@Override
+    public RegistrationToken generateNewVerificationToken(String existingVerificationToken) {
+		RegistrationToken vToken = registrationTokenRepository.findByToken(existingVerificationToken);
+        vToken.updateToken(UUID.randomUUID().toString());
+        vToken = registrationTokenRepository.save(vToken);
+        return vToken;
+    }
 	
 	/**
 	 * Delete an VerificationToken on database

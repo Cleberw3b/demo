@@ -2,7 +2,6 @@ package com.ipayso.config;
 
 import java.util.Locale;
 
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -29,19 +28,19 @@ public class CommonBeanConfig {
 	}
 	
 	@Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("i18n/messages");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
+    public ResourceBundleMessageSource messageSource() {
+    	ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    	messageSource.setBasename("i18n/messages");
+    	messageSource.setDefaultEncoding("UTF-8");
+    	return messageSource;
     }
-
+    
     @Bean
     public LocaleResolver localeResolver() {
-        CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(new Locale("en"));
-        resolver.setCookieName("myLocaleCookie");
-        resolver.setCookieMaxAge(4800);
-        return resolver;
+    	CookieLocaleResolver resolver = new CookieLocaleResolver();
+    	resolver.setDefaultLocale(new Locale("en"));
+    	resolver.setCookieName("myLocaleCookie");
+    	resolver.setCookieMaxAge(4800);
+    	return resolver;
     }
 }

@@ -102,7 +102,7 @@ public class SignUpController {
     
 	@RequestMapping(value = "/success" , method = RequestMethod.GET)
 	public ModelAndView successRegistration(User user){
-		ModelAndView mv = new ModelAndView("/success");
+		ModelAndView mv = new ModelAndView("successAfterSignUp");
 		mv.addObject("user", user);
 		return mv;
 	}

@@ -20,4 +20,12 @@ public class CommonController {
     public String index(){
         return "home";
     }
+    
+    /**
+     * 
+     */
+    @RequestMapping("/badUser")
+    public String badUser(){
+    	return "badUser";
+    }
 }

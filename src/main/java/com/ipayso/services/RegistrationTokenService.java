@@ -12,9 +12,11 @@ import com.ipayso.model.User;
  */
 public interface RegistrationTokenService extends CRUDService<RegistrationToken>{
 
-	RegistrationToken createToken(User user, String token);
-
 	String validateVerificationToken(String token);
 
-	RegistrationToken findByToken(String token);
+	RegistrationToken createToken(User user, String token);
+
+	RegistrationToken getByToken(String token);
+
+	RegistrationToken generateNewVerificationToken(String token);
 }
