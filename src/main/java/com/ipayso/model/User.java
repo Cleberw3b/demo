@@ -1,10 +1,13 @@
 package com.ipayso.model;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -22,53 +25,34 @@ import com.ipayso.util.validators.ValidEmail;
  * @see @Table
  */
 @Entity
-@Table(name = "userLogin")
+@Table(name = "user_login")
 public class User extends AbstractModelClass{
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "email",  unique = true)
+	@Column(unique = true)
 	@ValidEmail
 	@NotBlank (message = "E-mail Required")
 	String email;
-	
+
 	@NotBlank (message = "Password Required")
 	private String password;
 	
-	@Transient
-	private String passwordConfirm;
+	@OneToOne (targetEntity = Customer.class, fetch = FetchType.EAGER , cascade = {CascadeType.ALL})
+	@JoinColumn(name = "customer_id", referencedColumnName = "id", updatable = true, insertable = true)
+	private Customer customer;
 	
-	@NotBlank (message = "Day Required")
-	private String day;
-	
-	@NotBlank (message = "Month Required")
-	private String month;	
-	
-	@NotBlank (message = "Year Required")
-	private String year;
-
-	@NotBlank (message = "Gender Required")
-	private String gender;
-	
+	@NotBlank (message = "Role Required")
 	private String role;
-	
-	@NotBlank (message = "Country Required")
-	private String country;
-	
-	@NotBlank (message = "Bank Required")
-	private String bank;
-	
-	@NotBlank (message = "Bank Account Required")
-	private String bank_acc;
-	
-	private String question1;
-	
-	private String question2;
-	
-	private Boolean enabled = false;
+
+	private boolean enabled;
+
+	private boolean accountExpired;
+
+	private boolean accountLocked;
 
 	public String getEmail() {
 		return email;
@@ -86,68 +70,12 @@ public class User extends AbstractModelClass{
 		this.password = password;
 	}
 
-	public String getDay() {
-		return day;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setDay(String day) {
-		this.day = day;
-	}
-
-	public String getMonth() {
-		return month;
-	}
-
-	public void setMonth(String month) {
-		this.month = month;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getBank() {
-		return bank;
-	}
-
-	public void setBank(String bank) {
-		this.bank = bank;
-	}
-
-	public String getBank_acc() {
-		return bank_acc;
-	}
-
-	public void setBank_acc(String bank_acc) {
-		this.bank_acc = bank_acc;
-	}
-	
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public String getRole() {
@@ -158,27 +86,27 @@ public class User extends AbstractModelClass{
 		this.role = role;
 	}
 
-	public Boolean getEnabled() {
+	public boolean isEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(Boolean enabled) {
+	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	public String getQuestion1() {
-		return question1;
+	public boolean isAccountExpired() {
+		return accountExpired;
 	}
 
-	public void setQuestion1(String question1) {
-		this.question1 = question1;
+	public void setAccountExpired(boolean accountExpired) {
+		this.accountExpired = accountExpired;
 	}
 
-	public String getQuestion2() {
-		return question2;
+	public boolean isAccountLocked() {
+		return accountLocked;
 	}
 
-	public void setQuestion2(String question2) {
-		this.question2 = question2;
+	public void setAccountLocked(boolean accountLocked) {
+		this.accountLocked = accountLocked;
 	}
 }

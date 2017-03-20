@@ -7,7 +7,7 @@ package com.ipayso.util.enums;
  */
 public enum Years {
 
-	Year1920("1920"),
+	/* Year1920("1920"),
 	Year1921("1921"),
 	Year1922("1922"),
 	Year1923("1923"),
@@ -36,7 +36,7 @@ public enum Years {
 	Year1946("1946"),
 	Year1947("1947"),
 	Year1948("1948"),
-	Year1949("1949"),
+	Year1949("1949"), */
 	Year1950("1950"),
 	Year1951("1951"),
 	Year1952("1952"),

@@ -3,11 +3,13 @@
 <head lang="en" >
 </head>
 <body th:fragment="scripts">
-	<div class="copyright col-md-6">© 2017 - IPaySo. All rights reserved.</div>
-
-	<div class="col-md-6">
-		<button type="button" class="btn btn-bugReport" id="bugReportButton">Report a Bug</button>		
-	</div>
+	<footer>
+		<div class="copyright col-md-6">© 2017 - IPaySo. All rights reserved.</div>
+	
+		<div class="col-md-6">
+			<button type="button" class="btn btn-bugReport" id="bugReportButton">Report a Bug</button>		
+		</div>	
+	</footer>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	
@@ -17,6 +19,9 @@
 		$(document).ready(function(){
 		    $('#bugReportButton').click(function(){
 		        window.location= "/devipayso-1.0/bugReport";
+		    });
+		    $('.logo-img').click(function(){
+		        window.location= "/devipayso-1.0/home";
 		    });
 		});
 	</script>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+	<title>I Pay So</title>
+	<!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+	
+</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 top-menu-bar">
+					<div class="logo-ipayso">
+						<img src="../static/images/logo-ipayso.png" th:src="@{images/logo-ipayso.png}" alt="logo ipayso" class="logo-img"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	    <div class="container-fluid">
+	    	<div class="row" style="text-align: center;">
+		        <h1>Admin Area</h1>
+	        </div>
+	         <div class="alert alert-info"  th:if="${not #strings.isEmpty(msg)}">
+     			<span th:text="${msg}"></span>
+     		</div>
+	        <div class="row">
+	        	<div class="row" style="padding: 30px">	        	
+		        	<div style="float: left;">
+			            <button type="button" class="btn"><a th:href="@{/home}" >Home</a></button>
+		            </div>
+		           	<div style="float: left; margin-left: 5px;">
+			            <button type="button" class="btn"><a th:href="@{/users/add}" >Add</a></button>	
+		            </div>
+	        	</div>
+	        	<div class="row panel panel-default">
+	            	<div class="panel-heading">Users</div>
+			        <table class="table table-striped">
+				        <tr>
+			                <td th:text="ID">ID</td>
+			                <td th:text="Email">Email</td>
+			                <td th:text="Enabled">Enabled</td>
+			                <td th:text="Locked">Locked</td>
+			                <td th:text="Role">Role</td>
+			                <td th:text="Action">Action></td>
+			                <td th:text="Action">Action></td>
+			            </tr>
+				        <tr th:each="user : ${users}">
+			                <td th:text="${user.id}">ID</td>
+			                <td th:text="${user.email}">Email</td>
+			                <td th:text="${user.enabled}">Enabled</td>
+			                <td th:text="${user.accountLocked}">Locked</td>
+			                <td th:text="${user.role}">Role</td>
+			                <td><a th:href="@{'/users/edit/' + ${user.id}}">Edit</a></td>
+			                <td><a th:href="@{'/users/delete/' + ${user.id}}">Delete</a></td>
+			            </tr>
+		            </table>
+            	</div>
+	           	<div th:fragment='paginationbar'>
+			        <div style="text-align: center; margin: auto;">
+			            <ul class='pagination pagination-centered'>
+			                <li th:class="${page.firstPage}?'disabled':''">
+			                <span th:if='${page.firstPage}'>← First</span>
+			                <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'>← First</a>
+			                </li>
+			                <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
+			                <span th:if='${not page.hasPreviousPage}'>«</span>
+			                <a th:if='${page.hasPreviousPage}' th:href='@{${page.url}(page=${page.number-2},size=${page.size})}' title='Go to previous page'>«</a>
+			                </li>
+			                <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''">
+			                <span th:if='${item.current}' th:text='${item.number}'>1</span>
+			                <a th:if='${not item.current}' th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'><span th:text='${item.number}'>1</span></a>
+			                </li>
+			                <li th:class="${page.hasNextPage}? '' : 'disabled'">
+			                <span th:if='${not page.hasNextPage}'>»</span>
+			                <a th:if='${page.hasNextPage}' th:href='@{${page.url}(page=${page.number},size=${page.size})}' title='Go to next page'>»</a>
+			                </li>
+			                <li th:class="${page.lastPage}? 'disabled' : ''">
+			                <span th:if='${page.lastPage}'>Last →</span>
+			                <a th:if='${not page.lastPage}' th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last →</a>
+			                </li>
+			            </ul>
+			        </div>
+			    </div>
+			</div>
+	    </div>
+	    <!--/*/ <th:block th:include="fragments/scripts :: scripts"></th:block> /*/-->
+	</body>
+</html>

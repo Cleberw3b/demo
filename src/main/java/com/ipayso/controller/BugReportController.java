@@ -16,7 +16,6 @@ import com.ipayso.services.BugReportTicketService;
 @Controller
 public class BugReportController {
 	
-	private BugReportTicketService bugReportTicketService;
 
 	/**
 	 * Injects an BugReportTicketService implementation into bugReportTicketService variable
@@ -24,9 +23,7 @@ public class BugReportController {
 	 * @see BugReportTicketService
 	 */
 	@Autowired
-	public void setBugReportTicketService(BugReportTicketService bugReportTicketService) {
-		this.bugReportTicketService = bugReportTicketService;
-	}
+	private BugReportTicketService bugReportTicketService;
 	
 	@RequestMapping(value = "/bugReport",  method = RequestMethod.GET)
 	public ModelAndView newBugReportTicket(BugReportTicket bugReportTicket){

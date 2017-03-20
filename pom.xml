@@ -101,7 +101,7 @@
 			<artifactId>spring-boot-starter-data-solr</artifactId>
 		</dependency>
 	</dependencies>
-
+	
 	<profiles>
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->

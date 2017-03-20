@@ -16,9 +16,7 @@ public class RegistrationToken extends AbstractModelClass{
 	 */
 	private static final long serialVersionUID = 1L;
 
-
 	private static final int EXPIRATION = 60 * 24;
-
 
 	private String token;
 

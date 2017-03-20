@@ -22,19 +22,13 @@ import com.ipayso.services.UserService;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	private UserService userService;
-	
 	/**
 	 * Injects UserService in order to use its methods
 	 * @see UserService
 	 */
 	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	private UserService userService;
 
-	private Converter<User, UserDetails> userUserDetailsConverter;
-	
 	/**
 	 * Injects userToUserDetails by @Qualifier to indicate which class should implement the Converter interface,
 	 * in order to convert a User into a Userdetails
@@ -44,9 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 */
 	@Autowired
 	@Qualifier(value = "userToUserDetails")
-	public void setUserUserDetailsConverter(Converter<User, UserDetails> userUserDetailsConverter) {
-		this.userUserDetailsConverter = userUserDetailsConverter;
-	}
+	private Converter<User, UserDetails> userUserDetailsConverter;
 	
 
 	/**

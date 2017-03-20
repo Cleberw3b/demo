@@ -1,20 +1,20 @@
 package com.ipayso.util.enums;
 
 /**
- * Role.class -> Enum for Roles
+ * Authorisation.class -> Enum for Authorisation
  * @author Cleber Oliveira
  * @version 1.0
  */
-public enum Role {
-	BUYER("Buyer"),
-	SELLER("Seller");
+public enum Authorisation {
+	USER("User"),
+	ADMIN("Admin");
 	
 	/**
 	 * Create a description to get the enum's description
 	 */
 	private String description;
 	
-	Role (String description){
+	Authorisation (String description){
 		this.description = description;
 	}
 

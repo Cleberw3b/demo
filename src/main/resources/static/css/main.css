@@ -1,13 +1,27 @@
-html, body {
+html{
+    position: relative;
+    min-height: 100%;
+}
+
+body {
 	font-family: 'Lato', sans-serif;
 	font-size: 16px;
-	padding: 0;
-	margin: 0;
+	margin: 0 0 40px; /* bottom = footer height */
+    padding: 15px;
 	font-weight: 300;
 	color: #676d75;
 	margin: 0 auto;
 	background-color: #f6f7fa;
 	outline: none;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    overflow:hidden;
 }
 
 h1.banner-header {
@@ -51,6 +65,10 @@ top menu bar
 
 .logo-ipayso {
 	padding-left: 30px;
+}
+
+.logo-img{
+	cursor: pointer;	
 }
 /*
 ========================================

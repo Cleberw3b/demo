@@ -25,17 +25,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 
-    private UserDetailsService userDetailsService;
-	
-    /**
+	/**
 	 * Inject userDetailsService to access it's methods
 	 * @see UserDetailsService
 	 */
-    @Autowired
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-	}
-
+	@Autowired
+    private UserDetailsService userDetailsService;
+	
     /**
 	 * Inject authenticationManagerBuilder to access it's methods and makes UserDetailsService as reference for authenticate users as UserDetails
 	 * @see AuthenticationManagerBuilder
@@ -58,6 +54,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity
 		.authorizeRequests().antMatchers("/", "/home", "/bugReport", "/signup", "/success", "/emailConfirm**","/badUser**", "/resources/**", "/css/**", "/js/**", "/fonts/**", "/images/**").permitAll()
 		.anyRequest().authenticated()
+		.and()
+		.authorizeRequests().antMatchers("/users", "customers").hasAnyRole("ADMIN")
 		.and()
 		.formLogin().loginPage("/login").permitAll()
         .and()

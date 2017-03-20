@@ -8,11 +8,7 @@ import org.springframework.stereotype.Component;
 import com.ipayso.model.User;
 import com.ipayso.services.UserService;
 import com.ipayso.services.security.EncoderService;
-import com.ipayso.util.enums.Days;
-import com.ipayso.util.enums.Genders;
-import com.ipayso.util.enums.Months;
-import com.ipayso.util.enums.Role;
-import com.ipayso.util.enums.Years;
+import com.ipayso.util.enums.Authorisation;
 
 /**
  * StartOnApplication.class -> This class implements ApplicationRunner which allow this @Component to be load when the container starts.
@@ -24,18 +20,14 @@ import com.ipayso.util.enums.Years;
 @Component
 public class StartOnApplication implements ApplicationRunner {
 	
-	private UserService userService;
-
 	/**
 	 * Injects an UserService implementation into userService variable
 	 * @param userService
 	 * @see UserService
 	 */
 	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-	
+	private UserService userService;
+
 	@Autowired
 	private EncoderService encodeService;
 	
@@ -49,17 +41,10 @@ public class StartOnApplication implements ApplicationRunner {
 	 */
 	private void setAdminUser(){
 		User user = new User();
-		user.setBank("12345");
-		user.setBank_acc("12345");
-		user.setCountry("Brazil");
-		user.setDay(Days.ONE.getDescription());
-		user.setMonth(Months.JANUARY.getDescription());
-		user.setYear(Years.Year1985.getDescription());
-		user.setGender(Genders.MALE.getDescription());
 		user.setPassword(encodeService.encodeString("adminPass"));
-		user.setEmail("admin@admin.adm");
+		user.setEmail("admin@ipayso.com");
 		user.setEnabled(true);
-		user.setRole(Role.ADMIN.getDescription());
+		user.setRole(Authorisation.ADMIN.getDescription());
 		user = userService.saveOrUpdate(user);
 	}
 }

@@ -1,6 +1,12 @@
 package com.ipayso.services;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.ipayso.model.User;
+import com.ipayso.model.UserRegister;
 
 /**
  * UserService.class -> This interface extends all methods from CRUDService and assign a specific method to get an User by its email
@@ -18,6 +24,12 @@ public interface UserService extends CRUDService<User>{
 	 */
     User getUserByEmail(String email);
     
-    User newUser(User user);
+    List<User> listAll();
+    
+    User newRegisteredUser(UserRegister user);
+    
+    Page<User> listAll(Pageable pageable);
+    
+    List<String> listAllHasNoCustomer();
 
 }

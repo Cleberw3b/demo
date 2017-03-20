@@ -3,21 +3,19 @@ package com.ipayso.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ipayso.model.RegistrationToken;
 import com.ipayso.model.User;
-import com.ipayso.model.security.VerificationToken;
+import com.ipayso.services.MailService;
 import com.ipayso.services.RegistrationTokenService;
 
 /**
@@ -35,6 +33,10 @@ public class SuccessRegistrationController {
 
 	@Autowired
 	private MessageSource messages;
+
+	@Autowired
+	private MailService mailService;
+	
 	
 	@RequestMapping(value = "/emailConfirm", method = RequestMethod.GET)
 	public ModelAndView confirmRegistration( Locale locale, @RequestParam("token")  String token) throws UnsupportedEncodingException {
@@ -42,6 +44,8 @@ public class SuccessRegistrationController {
 		ModelAndView mv = new ModelAndView();
 		if (result.equals("valid")) {
 			mv.addObject("msg",  messages.getMessage("message.regSucc", null, locale));
+			SimpleMailMessage email = mailService.constructConfirmationUserRegistered(locale, registrationTokenService.getByToken(token).getUser());
+			mailService.sendEmail(email);
 			mv.setViewName("/login");
 			return mv;
 		}
@@ -55,11 +59,12 @@ public class SuccessRegistrationController {
 	}
 	
 	@RequestMapping(value = "/resendEmailVerification", method = RequestMethod.POST)
-	public ModelAndView resendEmailVerification(){
-		RegistrationToken newVerificationToken = registrationTokenService.generateNewVerificationToken("");
+	public ModelAndView resendEmailVerification(@RequestParam("token")  String token, WebRequest request){
+		RegistrationToken newVerificationToken = registrationTokenService.generateNewVerificationToken(token);
 		String newToken = newVerificationToken.getToken();
 		User user =  newVerificationToken.getUser();
-		//TODO resend link to confirm e-mail
+		SimpleMailMessage email = mailService.constructResendVerificationTokenEmail(request.getContextPath(), request.getLocale(), newVerificationToken, user);
+		mailService.sendEmail(email);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("token", newToken);
 		return mv;

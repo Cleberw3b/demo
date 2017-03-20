@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ipayso.model.User;
+import com.ipayso.model.UserRegister;
 import com.ipayso.services.UserService;
 import com.ipayso.util.enums.Countries;
 import com.ipayso.util.enums.Days;
@@ -56,7 +57,7 @@ public class SignUpController {
      * @see @RequestMapping
      */
     @RequestMapping(value = "/signup",  method = RequestMethod.GET)
-    public ModelAndView newSignUp(User user){
+    public ModelAndView newSignUp(UserRegister userRegister){
     	ModelAndView mv = new ModelAndView("signup");
     	mv.addObject("genders", Arrays.asList(Genders.values()));
     	mv.addObject("months", Arrays.asList(Months.values()));
@@ -79,22 +80,24 @@ public class SignUpController {
      * @see ModelAndView
      * @see @RequestMapping
      */
-    @RequestMapping(value = "signup", method = RequestMethod.POST)
-    public ModelAndView saveUser(@Valid User user, BindingResult userResult, RedirectAttributes attributes, WebRequest request){
-    	if (!user.getPassword().equals(user.getPasswordConfirm())){
-    		userResult.addError(new ObjectError("msg", "Password must match"));
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public ModelAndView saveUser(@Valid UserRegister userRegister, BindingResult result, RedirectAttributes attributes, WebRequest request){
+    	
+    	User user = new User();
+    	if (!userRegister.getPassword().equals(userRegister.getPasswordConfirm())){
+    		result.addError(new ObjectError("msg", "Password must match"));
     	}
-    	if (userResult.hasErrors()){
-			return newSignUp(user);
+    	if (result.hasErrors()){
+			return newSignUp(userRegister);
     	}
     	try {
-    		user =  userService.newUser(user);
+    		user =  userService.newRegisteredUser(userRegister);
     		eventPublisher.publishEvent(new OnRegistrationCompleteEvent (user, request.getLocale(), request.getContextPath()));
 		} catch (RuntimeException e) {
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
-				userResult.addError(new ObjectError("msg", "E-mail already exists"));
-				return newSignUp(user);
+            	result.addError(new ObjectError("msg", "E-mail already exists"));
+				return newSignUp(userRegister);
             }
 		}
     	return successRegistration(user);

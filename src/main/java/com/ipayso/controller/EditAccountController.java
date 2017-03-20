@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,7 +66,7 @@ public class EditAccountController {
 			user = userService.getUserByEmail(securityService.findLoggedInUsername());
 		}
 		user.setPassword("");
-		user.setPasswordConfirm("");
+		//user.setPasswordConfirm("");
 		mv.addObject("user", user);
 		mv.addObject("genders", Arrays.asList(Genders.values()));
 		mv.addObject("months", Arrays.asList(Months.values()));
@@ -90,9 +89,9 @@ public class EditAccountController {
 	 */
 	@RequestMapping(value = "/editMyAccount", method = RequestMethod.POST)
 	public ModelAndView updateUser(@Valid User user, BindingResult result, RedirectAttributes attributes){
-		if (!user.getPassword().equals(user.getPasswordConfirm())){
+		/*if (!user.getPassword().equals(user.getPasswordConfirm())){
 			result.addError(new ObjectError("msg", "Password must match"));
-		}
+		}*/
 		if (result.hasErrors()){
 			return editUserLogin(user);
 		}

@@ -4,8 +4,8 @@ import java.util.Locale;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import com.ipayso.model.RegistrationToken;
 import com.ipayso.model.User;
-import com.ipayso.model.security.VerificationToken;
 
 /**
  * VerificationTokenService.class -> This interface extends all methods from CRUDService
@@ -15,8 +15,14 @@ import com.ipayso.model.security.VerificationToken;
 public interface MailService {
 	
 	SimpleMailMessage constructResendVerificationTokenEmail(final String contextPath, final Locale locale, 
-															final VerificationToken newToken, final User user);
+															final RegistrationToken newToken, final User user);
 	
 	SimpleMailMessage constructResetTokenEmail(final String contextPath, final Locale locale, final String token, final User user);
+	
+	SimpleMailMessage constructConfirmEmailMessage(final String appURL, final Locale locale, final User user, final String token);
+	
+	SimpleMailMessage constructConfirmationUserRegistered(final Locale locale, final User user);
+	
+	void sendEmail(SimpleMailMessage email);
 	
 }
