@@ -3,6 +3,7 @@ package com.ipayso.controller.admin;
 import java.sql.SQLException;
 import java.util.Arrays;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,7 +37,7 @@ public class UserController {
 	private EncoderService encoderService;
 	
 	@RequestMapping(value = "/users",  method = RequestMethod.GET)
-	public ModelAndView listUsers(Pageable pageable){
+	public ModelAndView listUsers(Pageable pageable, @RequestParam(required = false, value = "msg") String msg){
 		
 		Page<User> usersPage = userService.listAll(pageable);
         PageWrapper<User> page = new PageWrapper<User>(usersPage, "/users");
@@ -43,16 +45,18 @@ public class UserController {
 		ModelAndView mv= new ModelAndView("users");
 		mv.addObject("users", page.getContent());
 		mv.addObject("page", page);
+		mv.addObject("msg", msg);
 		return mv;
 	}
 	
 	@RequestMapping(value = "/users/save", method = RequestMethod.POST)
-	public ModelAndView saveUser(@Valid User user, BindingResult result, RedirectAttributes attributes){		
+	public ModelAndView saveUser(@Valid User user, BindingResult result, RedirectAttributes attributes, HttpServletRequest request){		
+		ModelAndView mv= new ModelAndView("redirect:/users");
 		if (result.hasErrors()){
 			return addUser(user);
     	}
-		user.setPassword(encoderService.encodeString(user.getPassword()));
 		try {
+			user.setPassword(encoderService.encodeString(user.getPassword()));
 			userService.saveOrUpdate(user);
 			
 		} catch (Exception e) {
@@ -62,7 +66,8 @@ public class UserController {
             	return addUser(user);
             }
 		}
-		ModelAndView mv= new ModelAndView("redirect:/users");
+		String msg = "User " + user.getEmail() + " saved successfully";
+		mv.addObject("msg", msg);			
 		return mv;
 	}
 

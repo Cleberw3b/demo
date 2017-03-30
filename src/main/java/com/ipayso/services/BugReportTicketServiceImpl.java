@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ipayso.model.BugReportTicket;
@@ -47,7 +49,7 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
      * @return List
      */
 	@Override
-	public List<?> listAll() {
+	public List<BugReportTicket> listAll() {
 		List<BugReportTicket> reports = new ArrayList<>();
         bugReportTicketRepository.findAll().forEach(reports::add);
         return reports;
@@ -70,12 +72,6 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
      */
 	@Override
 	public BugReportTicket saveOrUpdate(BugReportTicket domainObject) {
-		User user= userService.getUserByEmail(securityService.findLoggedInUsername());
-		if (user == null){
-			user= userService.getUserByEmail("admin@admin.adm");
-		}
-		domainObject.setUser(user);
-		domainObject.setDone(false);
 		return bugReportTicketRepository.save(domainObject);
 	}
 	
@@ -87,5 +83,21 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	public void delete(Integer id) {
 		bugReportTicketRepository.delete(id);
 		
+	}
+
+	@Override
+	public Page<BugReportTicket> listAll(Pageable pageable) {
+		return bugReportTicketRepository.findAll(pageable);
+	}
+
+	@Override
+	public BugReportTicket saveNewBug(BugReportTicket bug) {
+		User user= userService.getUserByEmail(securityService.findLoggedInUsername());
+		if (user == null){
+			user= userService.getUserByEmail("admin@ipayso.com");
+		}
+		bug.setUser(user);
+		bug.setDone(false);
+		return saveOrUpdate(bug); 
 	}
 }

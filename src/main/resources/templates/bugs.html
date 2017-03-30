@@ -20,7 +20,6 @@
 	    	<div class="row" style="text-align: center;">
 		        <h1>Admin Area</h1>
 	        </div>
-     			<span th:text="${msg}"></span>
 	         <div class="alert alert-info"  th:if="${not #strings.isEmpty(msg)}">
      			<span th:text="${msg}"></span>
      		</div>
@@ -30,29 +29,31 @@
 			            <button type="button" class="btn"><a th:href="@{/home}" >Home</a></button>
 		            </div>
 		           	<div style="float: left; margin-left: 5px;">
-			            <button type="button" class="btn"><a th:href="@{/users/add}" >Add</a></button>	
+			            <button type="button" class="btn"><a th:href="@{/bugs/add}" >Add</a></button>	
 		            </div>
 	        	</div>
 	        	<div class="row panel panel-default">
-	            	<div class="panel-heading">Users</div>
+	            	<div class="panel-heading">Bugs Ticket</div>
 			        <table class="table table-striped">
 				        <tr>
 			                <td th:text="ID">ID</td>
-			                <td th:text="Email">Email</td>
-			                <td th:text="Enabled">Enabled</td>
-			                <td th:text="Locked">Locked</td>
-			                <td th:text="Role">Role</td>
+			                <td th:text="Title">Title</td>
+			                <td th:text="Description">Description</td>
+			                <td th:text="User">User</td>
+			                <td th:text="Done">Done</td>
+			                <td th:text="ClosedDate">Closed Date</td>
 			                <td th:text="Action">Action></td>
 			                <td th:text="Action">Action></td>
 			            </tr>
-				        <tr th:each="user : ${users}">
-			                <td th:text="${user.id}">ID</td>
-			                <td th:text="${user.email}">Email</td>
-			                <td th:text="${user.enabled}">Enabled</td>
-			                <td th:text="${user.accountLocked}">Locked</td>
-			                <td th:text="${user.role}">Role</td>
-			                <td><a th:href="@{'/users/edit/' + ${user.id}}">Edit</a></td>
-			                <td><a th:href="@{'/users/delete/' + ${user.id}}">Delete</a></td>
+				        <tr th:each="bug : ${bugs}">
+			                <td th:text="${bug.id}">ID</td>
+			                <td th:text="${bug.title}">Title</td>
+			                <td th:text="${bug.description}">Description</td>
+			                <td th:text="${bug.user.email}">User</td>
+			                <td th:text="${bug.done}">Done</td>
+			                <td th:text="${bug.closedDate}">Closed Date</td>
+			                <td><a th:href="@{'/bugs/edit/' + ${bug.id}}">Edit</a></td>
+			                <td><a th:href="@{'/bugs/delete/' + ${bug.id}}">Delete</a></td>
 			            </tr>
 		            </table>
             	</div>

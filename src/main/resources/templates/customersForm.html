@@ -62,7 +62,7 @@
 														 #fields.hasErrors('day') or 
 														 #fields.hasErrors('year')} ?  has-error">
 							<div class="input-group input-group-lg col-lg-4">
-								<span class="input-group-addon">User's Email: </span>
+								<span class="input-group-addon">Month: </span>
 								<select class="form-control" th:field="*{month}">
 									<option placeholder="#{label.signup.month}"
 											th:each="month : ${months}" 
@@ -71,7 +71,7 @@
 								</select>
 							</div>
 							<div class="input-group input-group-lg col-lg-4">
-								<span class="input-group-addon">User's Email: </span>
+								<span class="input-group-addon">Day: </span>
 								<select class="form-control" th:field="*{day}">
 									<option placeholder="#{label.signup.day}"
 											th:each="day : ${days}" 
@@ -80,7 +80,7 @@
 								</select>
 							</div>
 							<div class="input-group input-group-lg col-lg-4">
-								<span class="input-group-addon">User's Email: </span>
+								<span class="input-group-addon">Year: </span>
 								<select class="form-control" th:field="*{year}">
 									<option placeholder="#{label.signup.year}"
 											th:each="year : ${years}" 

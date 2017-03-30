@@ -78,7 +78,7 @@ public class CustomerController {
             	return addCustomer(customer);
             }
 		}
-		mv.addObject("msg", "Customer added successfully");
+		mv.addObject("msg", "Customer saved successfully");
 		return mv;
 	}
 
@@ -107,7 +107,8 @@ public class CustomerController {
 
 	@RequestMapping("customers/edit/{id}")
     public ModelAndView editCustomer(@PathVariable Integer id){
-		Customer customer = customerService.getById(id);ModelAndView mv = new ModelAndView("customersForm");
+		Customer customer = customerService.getById(id);
+		ModelAndView mv = new ModelAndView("customersForm");
 		mv.addObject("title", "Add New Customer");
 		mv.addObject("roles", Arrays.asList(Role.values()));
     	mv.addObject("genders", Arrays.asList(Genders.values()));

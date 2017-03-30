@@ -26,8 +26,8 @@ public class BugReportTicket extends AbstractModelClass{
 	@NotBlank (message = "Please describe behavior in order to fix this bug")
 	private String description;
 	
-	@ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-	@JoinColumn(nullable = false, name = "user_id")
+	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	private boolean done;
