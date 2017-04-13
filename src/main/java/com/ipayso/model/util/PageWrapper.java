@@ -1,12 +1,24 @@
-package com.ipayso.controller.admin;
+package com.ipayso.model.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.ipayso.controller.admin.AdminController;
+
+/**
+ * PageWrapper<T>.class -> TODO
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see @Controller
+ * @see AdminController
+ */
 public class PageWrapper<T>  {
 	
+	/**
+	 * TODO
+	 */
 	public static final int MAX_PAGE_ITEM_DISPLAY = 5;
     private Page<T> page;
     private List<PageItem> items;

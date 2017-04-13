@@ -23,9 +23,10 @@ import java.util.Collection;
  */
 @Component
 public class UserToUserDetails implements Converter<User, UserDetails> {
-	
+
 	/**
 	 * Overrides the convert method passing an User as @param after set userDetails with User information the method @return userDetails
+	 * @see Converter convert method
 	 */
     @Override
     public UserDetails convert(User user) {
@@ -39,7 +40,6 @@ public class UserToUserDetails implements Converter<User, UserDetails> {
             authorities.add(new SimpleGrantedAuthority(user.getRole()));
             userDetails.setAuthorities(authorities);
         }
-
         return userDetails;
     }
 }

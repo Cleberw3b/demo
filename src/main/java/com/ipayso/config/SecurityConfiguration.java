@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -45,21 +46,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	/**
 	 * Override configure from WebSecurityConfigurerAdapter and describes authorization permitting request
-	 * unauthenticated for the Matchers and any other must be authenticated referring to login page
+	 * unauthenticated for the Matchers and any other must be authenticated referring to login page.
+	 * Also configure an session management to control concurrency on authentication as well as how to
+	 * invalidated a session.
 	 * @see HttpSecurity
 	 * @throws Exception
 	 */
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
-		.authorizeRequests().antMatchers("/", "/home", "/bugReport", "/signup", "/success", "/emailConfirm**","/badUser**", "/resources/**", "/css/**", "/js/**", "/fonts/**", "/images/**").permitAll()
-		.anyRequest().authenticated()
+			.authorizeRequests().antMatchers("/", "/home", "/bugReport**", "/signup", "/success", "/emailConfirm**","/badUser**", "/resources/**", "/css/**", "/js/**", "/fonts/**", "/images/**").permitAll()
+				.anyRequest().authenticated()
 		.and()
-		.authorizeRequests().antMatchers("/users", "/customers").hasAnyRole("ADMIN")
+			.authorizeRequests().antMatchers("/users", "/customers").hasAnyRole("ADMIN")
 		.and()
-		.formLogin().loginPage("/login").permitAll()
+			.formLogin().loginPage("/login").permitAll()
         .and()
-        .logout().permitAll();
+        	.logout().permitAll()
+        .and()
+			.sessionManagement()
+				.maximumSessions(2)
+				.expiredUrl("/sessionExpired.html")
+		.and()
+			.invalidSessionUrl("/invalidSession.html")
+			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+			.sessionFixation().migrateSession();
 	}
 
 }

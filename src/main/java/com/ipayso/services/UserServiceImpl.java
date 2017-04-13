@@ -40,32 +40,31 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private EncoderService encoderService;
     
-    /**
-     * TODO
+	 /**
+     * Injects UserRegisterToUser to convert UserRegister into User
+     * @see UserRegisterToUser
      */
     @Autowired
     private UserRegisterToUser userRegisterToUser;
     
-    /**
-     * TODO
+	 /**
+     * Injects UserRegisterToCustomer to convert UserRegister into Customer
+     * @see UserRegisterToCustomer
      */
     @Autowired
     private UserRegisterToCustomer userRegisterToCustomer;
     
     /**
-     * Get an User by its e-mail
-     * @param email
-     * @return User
-     */
+	 * @see UserService getUserByEmail method
+	 */
 	@Override
 	public User getUserByEmail(String email) {
 		return userRepository.findOneByEmail(email);
 	}
 	
 	/**
-	 * List all Users on database
-     * @return List
-     */
+	 * @see CRUDService listAll method
+	 */
 	@Override
 	public List<User> listAll() {
 		List<User> users = new ArrayList<>();
@@ -74,27 +73,40 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
-	 * Get an User by its ID
-	 * @param id as Integer
-     * @return User
-     */
+	 * @see CRUDService getById method
+	 */
 	@Override
 	public User getById(Integer id) {
 		return userRepository.findOne(id);
 	}
 	
 	/**
-	 * Save or Update an user and return it updated 
-	 * @param User
-     * @return User
-     */
+	 * @see CRUDService saveOrUpdate method
+	 */
 	@Override
 	public User saveOrUpdate(User user) {
 		return userRepository.save(user);
 	}
 	
 	/**
-	 * TODO
+	 * @see CRUDService delete method
+	 */
+	@Override
+	public void delete(Integer id) {
+		userRepository.delete(id);
+		
+	}
+	
+	/**
+	 * @see UserService listAll method
+	 */
+	@Override
+	public Page<User> listAll(Pageable pageable) {
+		return userRepository.findAll(pageable);
+	}
+
+	/**
+	 * @see UserService newRegisteredUser method
 	 */
 	@Override
 	public User newRegisteredUser(UserRegister userRegister) {
@@ -111,20 +123,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
-	 * Delete an User on database
-	 * @param id as Integer
-     */
-	@Override
-	public void delete(Integer id) {
-		userRepository.delete(id);
-		
-	}
-	
-	@Override
-	public Page<User> listAll(Pageable pageable) {
-		return userRepository.findAll(pageable);
-	}
-	
+	 * @see UserService listAllHasNoCustomer method
+	 */
 	@Override
 	public List<String> listAllHasNoCustomer(){
 		List<String> usersEmail = new ArrayList<>();

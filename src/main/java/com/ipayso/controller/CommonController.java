@@ -22,7 +22,7 @@ public class CommonController {
     }
     
     /**
-     * 
+     * Map request from /badUser to its view
      */
     @RequestMapping("/badUser")
     public String badUser(){

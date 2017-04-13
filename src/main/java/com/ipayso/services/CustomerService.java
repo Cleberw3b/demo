@@ -22,6 +22,11 @@ public interface CustomerService extends CRUDService<Customer>{
 	 */
 	Customer getCustomerByUserName(String username);
 	
+	/**
+	 * Find all Customer and make it pageable
+	 * @param pageable
+	 * @return Page<Customer>
+	 * @see Pageable
+	 */
     Page<Customer> listAll(Pageable pageable);
-
 }

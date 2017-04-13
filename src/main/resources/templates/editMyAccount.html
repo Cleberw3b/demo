@@ -62,12 +62,6 @@
 						<div class="ips-login" th:classappend="${#fields.hasErrors('email')} ? has-error">
 							<input type='text' placeholder='E-mail (as username)' th:field="*{email}" />
 						</div>
-						<div class="ips-pass" th:classappend="${#fields.hasErrors('password')} ? has-error">
-							<input type='text' placeholder='Password' th:field="*{password}"/>
-						</div>
-						<div class="ips-pass">
-							<input type='text' placeholder='Confirm password' th:field="*{passwordConfirm}"/>
-						</div>
 						<div class="h-input">Date of birth:</div>
 						<div class="row" th:classappend="${#fields.hasErrors('month') or
 														 #fields.hasErrors('day') or 

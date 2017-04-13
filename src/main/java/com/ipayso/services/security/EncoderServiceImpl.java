@@ -1,7 +1,6 @@
 package com.ipayso.services.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +17,21 @@ public class EncoderServiceImpl implements EncoderService {
 	
 	/**
 	 * Injects BCryptPasswordEncoder to use encryption methods to check and encode strings
-	 * @see AuthenticationManager
+	 * @see BCryptPasswordEncoder
 	 */
 	@Autowired
 	private BCryptPasswordEncoder encoderService;
 	
     /**
-	 * This method encodes a String 
-	 * @return the encoded string
+	 * @see EncoderService encodeString method
 	 */
 	@Override
 	public String encodeString(String input) {
 		return encoderService.encode(input);
 	}
 	
-	/**
-	 * This method check matchers between an encode string and a raw string
-	 * @return true when they match and false when they don't
+    /**
+	 * @see EncoderService checkEncode method
 	 */
 	@Override
 	public boolean checkEncode(String rawPassword, String encodedPassword) {

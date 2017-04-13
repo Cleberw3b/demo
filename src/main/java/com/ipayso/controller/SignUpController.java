@@ -25,6 +25,7 @@ import com.ipayso.util.enums.Genders;
 import com.ipayso.util.enums.Months;
 import com.ipayso.util.enums.Years;
 import com.ipayso.util.event.OnRegistrationCompleteEvent;
+import com.ipayso.util.event.RegistrationListener;
 
 /**
  * SignUpController.class -> This Controller offers a URL filter to map requests for signup page 
@@ -50,7 +51,7 @@ public class SignUpController {
 	private ApplicationEventPublisher eventPublisher;
 	
     /**
-     * When filter captures a signup URL request this method is called to add objects on the view side 
+     * When filter captures a sign up URL request this method is called to add objects on the view side 
      * @param user
      * @return
      * @see ModelAndView
@@ -69,16 +70,19 @@ public class SignUpController {
     }
     
     /**
-     * When signup form is sent to action this method execute a password confirmation and validate the User,
+     * When sign up form is sent to action this method execute a password confirmation and validate the User,
      * if some error is caught, errors messages will be displayed on view. After all the validation
-     * we try to save this new user on database, in case of an existent e-mail it will catch a exception and say e-mail
-     * already registered. When registered the user will be auto logged and redirected to an successful page.
+     * it tries to save this new user on database, in case of an existent e-mail it will catch a exception and say e-mail
+     * already registered. In case of success it will publish an event called OnRegistrationCompleteEvent that will wake
+     * @RegistrationListener to perform token creation and email sent.
      * @param user
      * @param userResult
      * @param attributes
      * @return
      * @see ModelAndView
      * @see @RequestMapping
+     * @see OnRegistrationCompleteEvent
+     * @see RegistrationListener
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ModelAndView saveUser(@Valid UserRegister userRegister, BindingResult result, RedirectAttributes attributes, WebRequest request){
@@ -103,6 +107,11 @@ public class SignUpController {
     	return successRegistration(user);
     }
     
+    /**
+     * This method maps requests coming from /success to its view adding the User who has been successfully registered
+     * @param user
+     * @return
+     */
 	@RequestMapping(value = "/success" , method = RequestMethod.GET)
 	public ModelAndView successRegistration(User user){
 		ModelAndView mv = new ModelAndView("successAfterSignUp");

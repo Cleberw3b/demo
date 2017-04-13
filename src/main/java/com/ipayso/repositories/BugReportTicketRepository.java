@@ -1,7 +1,5 @@
 package com.ipayso.repositories;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
@@ -18,11 +16,10 @@ import com.ipayso.model.BugReportTicket;
 public interface BugReportTicketRepository extends CrudRepository<BugReportTicket, Integer>{
 	
 	/**
-	 * TODO
+	 * Find all BugReportTicket and make it pageable
 	 * @param pageable
-	 * @return
+	 * @return Page<BugReportTicket>
+	 * @see Pageable
 	 */
 	Page<BugReportTicket> findAll(Pageable pageable);
-
-	List<BugReportTicket> findAll();
 }

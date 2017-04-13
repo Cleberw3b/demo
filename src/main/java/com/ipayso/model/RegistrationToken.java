@@ -8,11 +8,19 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+/**
+ * RegistrationToken.class -> This class is an model for token that be issued on registration
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see AbstractModelClass
+ * @see @MappedSuperclass
+ * @see @Entity
+ */
 @Entity
 public class RegistrationToken extends AbstractModelClass{
 
 	/**
-	 * 
+	 * Here is the variables and their validator
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -20,6 +28,9 @@ public class RegistrationToken extends AbstractModelClass{
 
 	private String token;
 
+	/**
+	 * Reference a user as foreign key
+	 */
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(nullable = false, name = "user_id")
 	private User user;
@@ -71,6 +82,11 @@ public class RegistrationToken extends AbstractModelClass{
 		this.expiryDate = expiryDate;
 	}
 
+	/**
+	 * Calculate an expire date and return how long it will last
+	 * @param expiryTimeInMinutes
+	 * @return Date
+	 */
 	private Date calculateExpiryDate(int expiryTimeInMinutes) {
 		final Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(new Date().getTime());
@@ -78,6 +94,10 @@ public class RegistrationToken extends AbstractModelClass{
 		return new Date(cal.getTime().getTime());
 	}
 	
+	/**
+	 * Updates an existing token with a new expiration date
+	 * @param token
+	 */
 	public void updateToken(String token) {
 		this.token = token;
 		this.expiryDate = calculateExpiryDate(EXPIRATION);

@@ -26,18 +26,36 @@ import com.ipayso.services.RegistrationTokenService;
  */
 @Controller
 public class SuccessRegistrationController {
-
 	
+	/**
+	 * Injects an RegistrationTokenService implementation into registrationTokenService variable to send to User
+	 * @see RegistrationTokenService
+	 */
 	@Autowired
 	private RegistrationTokenService registrationTokenService;
 
+	/**
+	 * Injects an MessageSource implementation into messages variable to get content from our messages.properties
+	 * @see MessageSource
+	 */
 	@Autowired
 	private MessageSource messages;
 
+	/**
+	 * Injects an MailService implementation into mailService variable to send e-mail as service
+	 * @see MailService
+	 */
 	@Autowired
 	private MailService mailService;
 	
-	
+	/**
+	 * When User clicks on the link to activate their account this method is triggered to perform validation about the token they received
+	 * whether it is valid or not, case it is valid the method activate the User and them send a confirmation e-mail. 
+	 * @param locale
+	 * @param token
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping(value = "/emailConfirm", method = RequestMethod.GET)
 	public ModelAndView confirmRegistration( Locale locale, @RequestParam("token")  String token) throws UnsupportedEncodingException {
 		String result = registrationTokenService.validateVerificationToken(token);
@@ -55,9 +73,14 @@ public class SuccessRegistrationController {
 		mv.addObject("token", token);
 		mv.setViewName("/badUser");
 		return mv;
-		//return "redirect:/badUser.html?lang=" + locale.getLanguage();
 	}
 	
+	/**
+	 * In case the user has an invalid this method can send again an e-mail with new token
+	 * @param token
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/resendEmailVerification", method = RequestMethod.POST)
 	public ModelAndView resendEmailVerification(@RequestParam("token")  String token, WebRequest request){
 		RegistrationToken newVerificationToken = registrationTokenService.generateNewVerificationToken(token);

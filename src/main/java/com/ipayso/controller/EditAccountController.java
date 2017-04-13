@@ -30,29 +30,19 @@ import com.ipayso.util.enums.Years;
 @Controller
 public class EditAccountController {
 
-	private UserService userService;
-
 	/**
 	 * Injects an UserService implementation into userService variable
-	 * @param userService
 	 * @see UserService
 	 */
 	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
-
-	private SecurityService securityService;
+	private UserService userService;
 
 	/**
 	 * Injects an SecurityService implementation into securityService variable
-	 * @param securityService
 	 * @see SecurityService
 	 */
 	@Autowired
-	public void setSecurityService(SecurityService securityService) {
-		this.securityService = securityService;
-	}
+	private SecurityService securityService;
 
 	/**
 	 * When filter captures a /editMyAccount URL request this method is called to get the authenticated user and add objects on the view side
@@ -66,7 +56,6 @@ public class EditAccountController {
 			user = userService.getUserByEmail(securityService.findLoggedInUsername());
 		}
 		user.setPassword("");
-		//user.setPasswordConfirm("");
 		mv.addObject("user", user);
 		mv.addObject("genders", Arrays.asList(Genders.values()));
 		mv.addObject("months", Arrays.asList(Months.values()));
@@ -77,8 +66,8 @@ public class EditAccountController {
 	}
 
 	/**
-	 * When editMyAccount form is sent to action this method execute a password confirmation and validate the User,
-	 * if some error is caught we use a result to add errors messages and show it on view. After all the validation
+	 * When editMyAccount form is sent to action this method execute a validation for User,
+	 * if some error is caught we use a result to add errors messages and show it on view. After all the validation,
 	 * updates user on database and redirect to success page.
 	 * @param user
 	 * @param userResult
@@ -89,9 +78,6 @@ public class EditAccountController {
 	 */
 	@RequestMapping(value = "/editMyAccount", method = RequestMethod.POST)
 	public ModelAndView updateUser(@Valid User user, BindingResult result, RedirectAttributes attributes){
-		/*if (!user.getPassword().equals(user.getPasswordConfirm())){
-			result.addError(new ObjectError("msg", "Password must match"));
-		}*/
 		if (result.hasErrors()){
 			return editUserLogin(user);
 		}

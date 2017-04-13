@@ -10,12 +10,29 @@ import com.ipayso.util.formaters.BirthdayFormat;
 
 import groovyjarjarcommonscli.ParseException;
 
+/**
+ * UserRegisterToCustomer.class -> This class convert an UserRegister into a Customer.
+ * 								   The @Component annotation allow this class to be auto detected on Spring.
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see Converter
+ * @see UserRegister
+ * @see Customer
+ * @see @Component
+ */
 @Component
 public class UserRegisterToCustomer implements Converter<UserRegister, Customer> {
 
+	/**
+	 * Injects BirthdayFormat to convert the strings birthday info into a date
+	 */
 	@Autowired
 	private BirthdayFormat birthdayFormat;
 	
+	/**
+	 * Overrides the convert method passing an UserRegister to be converted into an Customer
+	 * @see Converter convert method
+	 */
 	@Override
 	public Customer convert(UserRegister userRegister) {
 		Customer customer = new Customer();

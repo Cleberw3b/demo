@@ -8,14 +8,25 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.ipayso.util.enums.Role;
 
+/**
+ * Customer.class -> This class is an model for customers
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see AbstractModelClass
+ * @see @MappedSuperclass
+ * @see @Entity
+ */
 @Entity
 public class Customer extends AbstractModelClass{
 
 	/**
-	 * 
+	 * Here is the variables and their validator
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * This creates a column in user for customer as foreign key 
+	 */
 	@OneToOne (mappedBy="customer")
 	private User user;
 	

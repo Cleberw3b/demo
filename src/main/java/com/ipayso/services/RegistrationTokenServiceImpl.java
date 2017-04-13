@@ -11,22 +11,16 @@ import org.springframework.stereotype.Service;
 import com.ipayso.model.RegistrationToken;
 import com.ipayso.model.User;
 import com.ipayso.repositories.RegistrationTokenRepository;
+import com.ipayso.util.enums.TokenStatus;
 
 /**
- * VerificationTokenServiceImpl.class -> This Service offers a VerificationTokenService implementation to persist the basics on a database. 
+ * RegistrationTokenServiceImpl.class -> This Service offers a RegistrationTokenServiceImpl implementation to persist the basics on a database. 
  * @author Cleber Oliveira
  * @version 1.0
  * @see VerificationTokenService
  */
 @Service
 public class RegistrationTokenServiceImpl implements RegistrationTokenService{
-	
-	public static final String TOKEN_INVALID = "invalidToken";
-    public static final String TOKEN_EXPIRED = "expired";
-    public static final String TOKEN_VALID = "valid";
-
-    public static String QR_PREFIX = "https://chart.googleapis.com/chart?chs=200x200&chld=M%%7C0&cht=qr&chl=";
-    public static String APP_NAME = "SpringRegistration";
 	
 	/**
 	 * Injects verificationTokenRepository to make transactions on database
@@ -43,9 +37,8 @@ public class RegistrationTokenServiceImpl implements RegistrationTokenService{
 	private UserService userService;
 	
 	/**
-	 * List all RegistrationToken on database
-     * @return List
-     */
+	 * @see CRUDService listAll method
+	 */
 	@Override
 	public List<?> listAll() {
 		List<RegistrationToken> tokens = new ArrayList<>();
@@ -54,31 +47,50 @@ public class RegistrationTokenServiceImpl implements RegistrationTokenService{
 	}
 	
 	/**
-	 * Get an RegistrationToken by its ID
-	 * @param id as Integer
-     * @return RegistrationToken
-     */
+	 * @see CRUDService getById method
+	 */
 	@Override
 	public RegistrationToken getById(Integer id) {
 		return registrationTokenRepository.findOne(id);
 	}
 	
+	/**
+	 * @see CRUDService saveOrUpdate method
+	 */
 	@Override
-	public RegistrationToken getByToken(String token){
-		return registrationTokenRepository.findByToken(token);
+	public RegistrationToken saveOrUpdate(RegistrationToken domainObject) {
+		return registrationTokenRepository.save(domainObject);
 	}
 	
 	/**
-	 * Create an VerificationToken and return it updated 
-	 * @param RegistrationToken
-     * @return RegistrationToken
-     */
+	 * @see CRUDService delete method
+	 */
+	@Override
+	public void delete(Integer id) {
+		registrationTokenRepository.delete(id);
+	}
+
+
+	/**
+	 * @see RegistrationTokenService createToken method
+	 */
 	@Override
 	public RegistrationToken createToken(User user, String token) {
 		RegistrationToken myToken = new RegistrationToken(token, user);
 		return registrationTokenRepository.save(myToken);
 	}
 	
+	/**
+	 * @see RegistrationTokenService createToken method
+	 */
+	@Override
+	public RegistrationToken getByToken(String token){
+		return registrationTokenRepository.findByToken(token);
+	}
+	
+	/**
+	 * @see RegistrationTokenService createToken method
+	 */
 	@Override
     public RegistrationToken generateNewVerificationToken(String existingVerificationToken) {
 		RegistrationToken vToken = registrationTokenRepository.findByToken(existingVerificationToken);
@@ -88,38 +100,26 @@ public class RegistrationTokenServiceImpl implements RegistrationTokenService{
     }
 	
 	/**
-	 * Delete an VerificationToken on database
-	 * @param id as Integer
-     */
-	@Override
-	public void delete(Integer id) {
-		registrationTokenRepository.delete(id);
-		
-	}
-
-	@Override
-	public RegistrationToken saveOrUpdate(RegistrationToken domainObject) {
-		return registrationTokenRepository.save(domainObject);
-	}
-	
+	 * @see RegistrationTokenService createToken method
+	 */
 	@Override
     public String validateVerificationToken(String token) {
         RegistrationToken registrationToken = registrationTokenRepository.findByToken(token);
         if (registrationToken == null || registrationToken.isUsed()) {
-            return TOKEN_INVALID;
+            return TokenStatus.TOKEN_INVALID.getDescription();
         }
 
         User user = registrationToken.getUser();
         Calendar cal = Calendar.getInstance();
         if ((registrationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
         	registrationTokenRepository.delete(registrationToken);
-            return TOKEN_EXPIRED;
+            return TokenStatus.TOKEN_EXPIRED.getDescription();
         }
 
         user.setEnabled(true);
         userService.saveOrUpdate(user);
         registrationToken.setUsed(true);
         registrationToken = registrationTokenRepository.save(registrationToken);
-        return TOKEN_VALID;
+        return TokenStatus.TOKEN_VALID.getDescription();
     }
 }

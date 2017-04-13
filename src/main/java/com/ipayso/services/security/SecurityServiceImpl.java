@@ -22,34 +22,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class SecurityServiceImpl implements SecurityService{
 	
-    private AuthenticationManager authenticationManager;
-    
-    /**
+	/**
 	 * Injects AuthenticationManager to provide a manager to organize the authentication
 	 * @see AuthenticationManager
 	 */
-    @Autowired
-    public void setAuthenticationManager(AuthenticationManager authenticationManager){
-    	this.authenticationManager = authenticationManager;
-    }
-    
-    private UserDetailsService userDetailsService;
-    
+	@Autowired
+    private AuthenticationManager authenticationManager;
+        
     /**
-	 * Injects UserDetailsService in order to use its methods
-	 * @see UserDetailsService
-	 */
+     * Injects UserDetailsService in order to use its methods
+     * @see UserDetailsService
+     */
     @Autowired
-    public void setUserDetailsService(UserDetailsService userDetailsService){
-    	this.userDetailsService = userDetailsService;
-    }
+    private UserDetailsService userDetailsService;
+
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
     
     /**
-	 * This method implements findLoggedInUsername to get the UserDetails which in currently logged into the system
-	 * @see SecurityContextHolder
-	 * @see UserDetails
+	 * @see SecurityService findLoggedInUsername method
 	 */
     @Override
     public String findLoggedInUsername() {
@@ -62,13 +53,8 @@ public class SecurityServiceImpl implements SecurityService{
         return null;
     }
     
-    /**
-	 * This method implements autologin to log an User using the e-mail and password, an UserDetailsService load the UserDetails them an
-	 * authentication Manager will authenticate the UserDetails as a Token, if logged successfully the method will return true otherwise
-	 * will be false.
-	 * @see UserDetailsService
-	 * @see UsernamePasswordAuthenticationToken
-	 * @see AuthenticationManager
+	/**
+	 * @see SecurityService autologin method
 	 */
     @Override
     public boolean autologin(String email, String password) {

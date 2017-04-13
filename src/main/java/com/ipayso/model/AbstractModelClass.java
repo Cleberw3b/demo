@@ -15,7 +15,7 @@ import javax.persistence.Version;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * AbstractModelClass.class -> This class is an model for model classes which implements ModelObject and Serializable for transaction purposes,
+ * AbstractModelClass.class -> This class is an abstract model for model classes which implements ModelObject and Serializable for transaction purposes,
  * 							   the annotation @MappedSuperclass say that it can be mapped in the same way as an entity except that the
  *							   mappings will apply only to its subclasses since no table exists for the mapped superclass itself which makes this
  *							   class perfect for models inherit. 
@@ -34,7 +34,7 @@ public class AbstractModelClass implements ModelObject, Serializable{
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * The column id is auto inclemented by @GeneratedValue and signed as id by @Id for all classes that would extend this class.
+	 * The column id is auto incremented by @GeneratedValue and signed as id by @Id for all classes that would extend this class.
 	 * @see @GeneratedValue
 	 * @see @Id
 	 */

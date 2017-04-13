@@ -10,9 +10,18 @@ import com.ipayso.util.enums.Months;
 
 import groovyjarjarcommonscli.ParseException;
 
+/**
+ * BirthdayFormat.class -> This class is used to convert the strings from form into a date
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see @Component
+ */
 @Component
 public class BirthdayFormat {
 	
+	/**
+	 * This method take the string parameters and convert it into a birthday date 
+	 */
 	public String convertRegistrationBirthday(String year, String month, String day) throws ParseException{
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -23,6 +32,11 @@ public class BirthdayFormat {
 		
 	}
 	
+	/**
+	 * Receive an String and verify which  month it belongs
+	 * @param month
+	 * @return the month
+	 */
 	private int monthInInt(String month){
 		if(month == Months.JANUARY.getDescription()){
 			return Calendar.JANUARY;

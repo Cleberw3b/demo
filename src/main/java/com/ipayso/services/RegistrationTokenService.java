@@ -12,11 +12,33 @@ import com.ipayso.model.User;
  */
 public interface RegistrationTokenService extends CRUDService<RegistrationToken>{
 
-	String validateVerificationToken(String token);
-
+	/**
+	 * Create an VerificationToken and return it updated 
+	 * @param RegistrationToken
+     * @return RegistrationToken
+     */
 	RegistrationToken createToken(User user, String token);
 
+	/**
+	 * Get the token by its UUID string
+	 * @param token
+	 * @return RegistrationToken
+	 */
 	RegistrationToken getByToken(String token);
 
+	/**
+	 * Generate and Update an existing token
+	 * @param token
+	 * @return RegistrationToken
+	 */
 	RegistrationToken generateNewVerificationToken(String token);
+
+	/**
+	 * This method verify if the token is Valid, Invalid or Expired
+	 * @param token
+	 * @return String
+	 */
+	String validateVerificationToken(String token);
+
+
 }

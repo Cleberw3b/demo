@@ -9,11 +9,19 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * BugReportTicket.class -> This class is an model for bug tickets
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see AbstractModelClass
+ * @see @MappedSuperclass
+ * @see @Entity
+ */
 @Entity
 public class BugReportTicket extends AbstractModelClass{
 
 	/**
-	 * 
+	 * Here is the variables and their validator
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -26,6 +34,9 @@ public class BugReportTicket extends AbstractModelClass{
 	@NotBlank (message = "Please describe behavior in order to fix this bug")
 	private String description;
 	
+	/**
+	 * This create a column in BugReport to link the user who made the report as foreign key
+	 */
 	@ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;

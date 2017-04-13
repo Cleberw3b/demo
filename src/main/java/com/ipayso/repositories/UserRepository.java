@@ -22,6 +22,11 @@ public interface UserRepository extends CrudRepository<User, Integer>{
 	 */
 	User findOneByEmail(String email);
 	
+	/**
+	 * Find all User and make it pageable
+	 * @param pageable
+	 * @return Page<User>
+	 * @see Pageable
+	 */
 	Page<User> findAll(Pageable pageable);
-
 }

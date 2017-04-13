@@ -14,13 +14,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ipayso.model.Customer;
 import com.ipayso.model.User;
+import com.ipayso.model.util.PageWrapper;
 import com.ipayso.services.CustomerService;
 import com.ipayso.services.UserService;
 import com.ipayso.util.enums.Countries;
@@ -31,24 +30,43 @@ import com.ipayso.util.enums.Role;
 import com.ipayso.util.enums.Years;
 import com.ipayso.util.formaters.BirthdayFormat;
 
+/**
+ * CustomerController.class -> This Controller implements AdminController for Customer
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see @Controller
+ * @see AdminController
+ */
 @Controller
-public class CustomerController {
+@RequestMapping(value = "/customers")
+public class CustomerController implements AdminController<Customer>{
 
 	/**
-	 * TODO
+	 * Injects an CustomerService implementation into customerService variable
+	 * @see CustomerService
 	 */
 	@Autowired
 	private CustomerService customerService;
 	
+	/**
+	 * Injects an UserService implementation into userService variable
+	 * @see UserService
+	 */
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * Injects an BirthdayFormat implementation into format variable to convert into a birthday
+	 * @see BirthdayFormat
+	 */
 	@Autowired
 	private BirthdayFormat format;
-	
-	@RequestMapping(value = "/customers",  method = RequestMethod.GET)
-	public ModelAndView listcustomers(Pageable pageable, @RequestParam(required = false, value = "msg") String msg){
-		
+
+	/**
+	 * List all Customer and put into view
+	 */
+	@Override
+	public ModelAndView list(Pageable pageable, String msg) {
 		Page<Customer> customersPage = customerService.listAll(pageable);
         PageWrapper<Customer> page = new PageWrapper<Customer>(customersPage, "/customers");
 		
@@ -58,12 +76,15 @@ public class CustomerController {
 		mv.addObject("msg", msg);
 		return mv;
 	}
-	
-	@RequestMapping(value = "/customers/save", method = RequestMethod.POST)
-	public ModelAndView saveCustomer(@Valid Customer customer, BindingResult result, RedirectAttributes attributes){		
+
+	/**
+	 * Persist Customer
+	 */
+	@Override
+	public ModelAndView save(@Valid Customer customer, BindingResult result, RedirectAttributes attributes) {
 		ModelAndView mv= new ModelAndView("redirect:/customers");
 		if (result.hasErrors()){
-			return addCustomer(customer);
+			return add(customer);
     	}
 		try {
 			User user = userService.getUserByEmail(customer.getUser().getEmail());
@@ -75,17 +96,20 @@ public class CustomerController {
 			Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
             	result.addError(new ObjectError("msg", "E-mail already exists"));
-            	return addCustomer(customer);
+            	return add(customer);
             }
 		}
 		mv.addObject("msg", "Customer saved successfully");
 		return mv;
 	}
 
-	@RequestMapping("customers/add")
-	public ModelAndView addCustomer(Customer customerParam){
-		if(customerParam == null){
-			customerParam = new Customer();			
+	/**
+	 * Call the add form to create new Customer
+	 */
+	@Override
+	public ModelAndView add(Customer customer) {
+		if(customer == null){
+			customer = new Customer();			
 		}
 		ModelAndView mv = new ModelAndView("customersForm");
 		mv.addObject("title", "Add New Customer");
@@ -95,7 +119,7 @@ public class CustomerController {
     	mv.addObject("days", Arrays.asList(Days.values()));
     	mv.addObject("years", Arrays.asList(Years.values()));
     	mv.addObject("countries", Arrays.asList(Countries.values()));
-		mv.addObject("customer", customerParam);
+		mv.addObject("customer", customer);
 		List<String> usersEmail = userService.listAllHasNoCustomer();			
 		mv.addObject("users", usersEmail);
 		if(usersEmail.isEmpty()){
@@ -105,8 +129,11 @@ public class CustomerController {
 		return mv;
 	}
 
-	@RequestMapping("customers/edit/{id}")
-    public ModelAndView editCustomer(@PathVariable Integer id){
+	/**
+	 * Call the edit form to edit Customer by its id
+	 */
+	@Override
+	public ModelAndView edit(@PathVariable Integer id) {
 		Customer customer = customerService.getById(id);
 		ModelAndView mv = new ModelAndView("customersForm");
 		mv.addObject("title", "Add New Customer");
@@ -118,10 +145,13 @@ public class CustomerController {
     	mv.addObject("countries", Arrays.asList(Countries.values()));
 		mv.addObject("customer", customer);
 		return mv;
-    }
+	}
 
-	@RequestMapping("customers/delete/{id}")
-	public ModelAndView deleteCustomer(@PathVariable Integer id){
+	/**
+	 * Delete a Customer by its id
+	 */
+	@Override
+	public ModelAndView delete(@PathVariable Integer id) {
 		customerService.delete(id);
 		ModelAndView mv = new ModelAndView("redirect:/customers");
 		mv.addObject("msg", "Customer Deleted");

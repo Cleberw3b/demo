@@ -33,16 +33,24 @@
 								<span th:text="${detailedError.message}"></span>
 							</div>
 						</div>
+						<span th:text="${uri}"></span>
 						<div class="alert alert-danger" th:if="${not #strings.isEmpty(msg)}">
 							<span th:text="${msg}"></span>
 						</div>
-						<div class="" th:classappend="${#fields.hasErrors('title')} ? has-error">
-							<input type='text' placeholder='Title' th:field="*{title}" />
+						<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('title')} ? has-error">
+							<span class="input-group-addon" id="title">Title: </span>
+							<input type="text" class="form-control" placeholder="Title" th:field="*{title}" aria-describedby="title"/>
 						</div>
-						<div class="" th:classappend="${#fields.hasErrors('url')} ? has-error">
-							<input type='text' placeholder='URL' th:field="*{url}" />
+						<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('url')} ? has-error">
+							<span class="input-group-addon" id="url">URL: </span>
+							<input type="text" class="form-control" placeholder="URL" th:field="*{url}" value="*{url}" aria-describedby="url" disabled="true"/>
 						</div>
-						<textarea placeholder='Description' th:field="*{description}" cols="50" rows="15"/>
+						<div style="text-align: center; margin: auto; padding-top: 20px; padding-bottom: 10px; font-size: 22px;">
+							<span id="description">Description: </span>
+						</div>
+						<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('description')} ? has-error">
+							<textarea placeholder='Description' th:field="*{description}" cols="38" rows="15"></textarea>
+						</div>
 						<button type="button" class="btn btn-default" id="cancelBugReport">Cancel</button>
 						<button type="submit" class="btn btn-default">Report</button>
 					</form>

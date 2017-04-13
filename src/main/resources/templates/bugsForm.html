@@ -44,9 +44,11 @@
 						 <span class="input-group-addon" id="url">URL: </span>
 						 <input type="text" class="form-control" placeholder="URL" th:field="*{url}" aria-describedby="url"/>
 					</div>
+					<div style="text-align: center; margin: auto; padding-top: 20px; padding-bottom: 10px; font-size: 22px;">
+						<span id="description">Description: </span>
+					</div>
            			<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('description')} ? has-error">
-						 <span class="input-group-addon" id="description">Description: </span>
-						 <textarea class="form-control" rows="5" placeholder='Description' th:field="*{description}"></textarea>
+						<textarea placeholder='Description' th:field="*{description}" cols="38" rows="15"></textarea>
 					</div>
 					
 				

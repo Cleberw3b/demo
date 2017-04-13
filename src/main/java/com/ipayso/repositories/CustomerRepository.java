@@ -9,7 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import com.ipayso.model.Customer;
 
 /**
- * CustomerRepository.class -> This interface is a repository for Customer,  any CustomerRepository instance is allowed to use CrudRepository methods
+ * CustomerRepository.class -> This interface is a repository for Customer,  any CustomerRepository
+ * 							   instance is allowed to use CrudRepository methods
  * @author Cleber Oliveira
  * @version 1.0
  * @see CrudRepository
@@ -18,15 +19,23 @@ import com.ipayso.model.Customer;
 public interface CustomerRepository extends CrudRepository<Customer, Integer>{
 	
 	/**
-	 * This method request an User passing an e-mail as parameter to receive the user which has the e-mail
-	 * @param email as String
-	 * @return an User
+	 * Find all Customer and make it pageable
+	 * @param pageable
+	 * @return Page<BugReportTicket>
+	 * @see Pageable
 	 */
-	
 	Page<Customer> findAll(Pageable pageable);
 
+	/**
+	 * List all Customer
+	 * @return List<Customer>
+	 */
 	List<Customer> findAll();
-
+	
+	/**
+	 * This method get a Customer by user name
+	 * @param username
+	 * @return Customer
+	 */
 	Customer getCustomerByUsername(String username);
-
 }

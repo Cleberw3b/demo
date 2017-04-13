@@ -14,8 +14,18 @@ import com.ipayso.model.BugReportTicket;
  */
 public interface BugReportTicketService extends CRUDService<BugReportTicket>{
 	
+	/**
+	 * Find all BugReportTicket and make it pageable
+	 * @param pageable
+	 * @return Page<BugReportTicket>
+	 * @see Pageable
+	 */
 	Page<BugReportTicket> listAll(Pageable pageable);
 	
+	/**
+	 * Persist BugReportTicket instance
+	 * @param bug
+	 * @return BugReportTicket
+	 */
 	BugReportTicket saveNewBug(BugReportTicket bug);
-
 }

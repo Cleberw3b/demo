@@ -6,11 +6,16 @@ import org.springframework.context.ApplicationEvent;
 
 import com.ipayso.model.User;
 
+
+/**
+ * OnRegistrationCompleteEvent.class -> This settle an event every time it is instantiated after
+ * 										an User is successfully persisted on sign up controller.
+ * @author Cleber Oliveira
+ * @version 1.0
+ * @see ApplicationEvent
+ */
 public class OnRegistrationCompleteEvent extends ApplicationEvent{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String appUrl;

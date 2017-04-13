@@ -31,7 +31,6 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	
     /**
      * Injects an SecurityService implementation into securityService variable
-     * @param securityService
      * @see SecurityService
      */
     @Autowired
@@ -39,14 +38,12 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	
     /**
      * Injects an UserService implementation into userService variable
-     * @param userService
      * @see UserService
      */
 	private UserService userService;
 	
 	/**
-	 * List all BugReportTicket on database
-     * @return List
+	 * @see CRUDService method listAll
      */
 	@Override
 	public List<BugReportTicket> listAll() {
@@ -56,9 +53,7 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	}
 	
 	/**
-	 * Get an BugReportTicket by its ID
-	 * @param id as Integer
-     * @return BugReportTicket
+	 * @see CRUDService method getById
      */
 	@Override
 	public BugReportTicket getById(Integer id) {
@@ -66,9 +61,7 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	}
 	
 	/**
-	 * Save or Update an BugReportTicket and return it updated 
-	 * @param BugReportTicket
-     * @return BugReportTicket
+	 * @see CRUDService method saveOrUpdate
      */
 	@Override
 	public BugReportTicket saveOrUpdate(BugReportTicket domainObject) {
@@ -76,8 +69,7 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	}
 	
 	/**
-	 * Delete an BugReportTicket on database
-	 * @param id as Integer
+	 * @see CRUDService method delete
      */
 	@Override
 	public void delete(Integer id) {
@@ -85,11 +77,17 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 		
 	}
 
+	/**
+	 * @see BugReportTicketRepository method listAll
+	 */
 	@Override
 	public Page<BugReportTicket> listAll(Pageable pageable) {
 		return bugReportTicketRepository.findAll(pageable);
 	}
-
+	
+	/**
+	 * @see BugReportTicketService method saveNewBug
+	 */
 	@Override
 	public BugReportTicket saveNewBug(BugReportTicket bug) {
 		User user= userService.getUserByEmail(securityService.findLoggedInUsername());

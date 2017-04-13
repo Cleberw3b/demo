@@ -29,10 +29,13 @@ import com.ipayso.util.validators.ValidEmail;
 public class User extends AbstractModelClass{
 
 	/**
-	 * 
+	 * Here is the variables and their validator
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * every e-mail must be unique
+	 */
 	@Column(unique = true)
 	@ValidEmail
 	@NotBlank (message = "E-mail Required")
@@ -41,6 +44,9 @@ public class User extends AbstractModelClass{
 	@NotBlank (message = "Password Required")
 	private String password;
 	
+	/**
+	 * Reference a customer as foreign key
+	 */
 	@OneToOne (targetEntity = Customer.class, fetch = FetchType.EAGER , cascade = {CascadeType.ALL})
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", updatable = true, insertable = true)
 	private Customer customer;

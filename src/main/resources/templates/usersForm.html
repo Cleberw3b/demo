@@ -36,14 +36,16 @@
            				<div class="alert alert-danger" th:if="${not #strings.isEmpty(msg)}">
            					<span th:text="${msg}"></span>
            				</div>
-           				
-						<div class="ips-login" th:classappend="${#fields.hasErrors('email')} ? has-error">
-							<input type='text' placeholder='E-mail (as username)' th:field="*{email}" />
+           				<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('email')} ? has-error">
+							 <span class="input-group-addon" id="email">Email: </span>
+							 <input type="text" class="form-control" placeholder="E-mail (as username)" th:field="*{email}" aria-describedby="email"/>
 						</div>
-						<div class="ips-pass" th:classappend="${#fields.hasErrors('password')} ? has-error">
-							<input type='text' placeholder='Password' th:field="*{password}"/>
+           				<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('password')} ? has-error">
+							 <span class="input-group-addon" id="password">Password: </span>
+							 <input type="text" class="form-control" placeholder="Password" th:field="*{password}" aria-describedby="email"/>
 						</div>
 						<div class="row radio-margin">
+							<span class="input-group-addon" id="password" style="text-align: center; margin: auto;">Roles: </span>
 							<div class="col-lg-3" th:each= "role : ${roles}">
 								 <div class="input-group">
 									 <span class="input-group-addon" >

@@ -4,8 +4,17 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.ipayso.util.validators.ValidEmail;
 
+/**
+ * User.class -> This class is an model for registration, lately it will split into User and Customer
+ * @author Cleber Oliveira
+ * @version 1.0
+ */
 public class UserRegister {
 
+	/**
+	 * Here is the variables and their validator
+	 * @see @ValidEmail
+	 */
 	@ValidEmail
 	@NotBlank (message = "E-mail Required")
 	String email;
