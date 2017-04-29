@@ -26,7 +26,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @see @MappedSuperclass
  */
 @MappedSuperclass
-public class AbstractModelClass implements ModelObject, Serializable{
+public class AbstractModelClass implements ModelObject, Serializable {
 	
 	/**
 	 * 
@@ -38,18 +38,11 @@ public class AbstractModelClass implements ModelObject, Serializable{
 	 * @see @GeneratedValue
 	 * @see @Id
 	 */
-	@GenericGenerator(
-	        name = "sequenceGenerator",
-	        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator"/*,
-	        parameters = {
-	                @Parameter(name = "sequence_name", value = "SEQUENCE"),
-	                @Parameter(name = "initial_value", value = "1"),
-	                @Parameter(name = "increment_size", value = "1")
-	        }*/
-	)
+	@GenericGenerator(name = "sequenceGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator")
 	@Id
 	@GeneratedValue(generator = "sequenceGenerator")
 	Integer id;
+	
 	
 	/**
 	 * The version is used to ensure integrity on this entity

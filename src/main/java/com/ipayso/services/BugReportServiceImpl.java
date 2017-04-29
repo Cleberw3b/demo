@@ -8,26 +8,26 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.ipayso.model.BugReportTicket;
+import com.ipayso.model.BugReport;
 import com.ipayso.model.User;
-import com.ipayso.repositories.BugReportTicketRepository;
+import com.ipayso.repositories.BugReportRepository;
 import com.ipayso.services.security.SecurityService;
 
 /**
  * BugReportTicketServiceImpl.class -> This Service offers a BugReportTicketService implementation to persist the basics on a database. 
  * @author Cleber Oliveira
  * @version 1.0
- * @see BugReportTicketService
+ * @see BugReportService
  */
 @Service
-public class BugReportTicketServiceImpl implements BugReportTicketService{
+public class BugReportServiceImpl implements BugReportService{
 	
 	/**
 	 * Injects BugReportTicketRepository to make transactions on database
-	 * @see BugReportTicketRepository
+	 * @see BugReportRepository
 	 */
 	@Autowired
-	private BugReportTicketRepository bugReportTicketRepository;
+	private BugReportRepository bugReportTicketRepository;
 	
     /**
      * Injects an SecurityService implementation into securityService variable
@@ -46,8 +46,8 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	 * @see CRUDService method listAll
      */
 	@Override
-	public List<BugReportTicket> listAll() {
-		List<BugReportTicket> reports = new ArrayList<>();
+	public List<BugReport> listAll() {
+		List<BugReport> reports = new ArrayList<>();
         bugReportTicketRepository.findAll().forEach(reports::add);
         return reports;
 	}
@@ -56,7 +56,7 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	 * @see CRUDService method getById
      */
 	@Override
-	public BugReportTicket getById(Integer id) {
+	public BugReport getById(Integer id) {
 		return bugReportTicketRepository.findOne(id);
 	}
 	
@@ -64,7 +64,7 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	 * @see CRUDService method saveOrUpdate
      */
 	@Override
-	public BugReportTicket saveOrUpdate(BugReportTicket domainObject) {
+	public BugReport saveOrUpdate(BugReport domainObject) {
 		return bugReportTicketRepository.save(domainObject);
 	}
 	
@@ -78,20 +78,21 @@ public class BugReportTicketServiceImpl implements BugReportTicketService{
 	}
 
 	/**
-	 * @see BugReportTicketRepository method listAll
+	 * @see BugReportRepository method listAll
 	 */
 	@Override
-	public Page<BugReportTicket> listAll(Pageable pageable) {
+	public Page<BugReport> listAll(Pageable pageable) {
 		return bugReportTicketRepository.findAll(pageable);
 	}
 	
 	/**
-	 * @see BugReportTicketService method saveNewBug
+	 * @see BugReportService method saveNewBug
 	 */
 	@Override
-	public BugReportTicket saveNewBug(BugReportTicket bug) {
+	public BugReport saveNewBug(BugReport bug) {
 		User user= userService.getUserByEmail(securityService.findLoggedInUsername());
 		if (user == null){
+			//TODO make sure this dont happen in production
 			user= userService.getUserByEmail("admin@ipayso.com");
 		}
 		bug.setUser(user);

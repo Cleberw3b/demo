@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ipayso.model.BugReportTicket;
-import com.ipayso.services.BugReportTicketService;
+import com.ipayso.model.BugReport;
+import com.ipayso.services.BugReportService;
 
 /**
  * BugController.class -> This Controller handle requests for bug Report
@@ -28,10 +28,10 @@ public class BugReportController{
 	/**
 	 * Injects an BugReportTicketService implementation into bugReportTicketService variable
 	 * @param bugReportTicketService
-	 * @see BugReportTicketService
+	 * @see BugReportService
 	 */
 	@Autowired
-	private BugReportTicketService bugReportTicketService;
+	private BugReportService bugReportTicketService;
 	
 	/**
 	 * This method get the path from view that sent a request, create new ticket and add it to view.
@@ -40,10 +40,10 @@ public class BugReportController{
 	 * @return
 	 */
 	@RequestMapping(value = "/bugReport", method = RequestMethod.GET)
-	public ModelAndView newBugReportTicket(BugReportTicket bugReportTicket, @RequestParam(required = true, value = "path") String path){
+	public ModelAndView newBugReportTicket(BugReport bugReportTicket, @RequestParam(required = true, value = "path") String path){
 		ModelAndView mv= new ModelAndView("/bugReport");
 		if(bugReportTicket == null){
-			bugReportTicket = new BugReportTicket();
+			bugReportTicket = new BugReport();
 		}
 		bugReportTicket.setUrl(path);
 		mv.addObject("bugReportTicket", bugReportTicket);
@@ -56,11 +56,11 @@ public class BugReportController{
 	 * @param result
 	 * @param attributes
 	 * @return successful reported
-	 * @see BugReportTicket
+	 * @see BugReport
 	 * @see @RequestMapping
 	 */
 	@RequestMapping(value = "/bugReport",  method = RequestMethod.POST)
-    public ModelAndView bugReport(@Valid BugReportTicket bugReportTicket, BindingResult result, RedirectAttributes attributes){
+    public ModelAndView bugReport(@Valid BugReport bugReportTicket, BindingResult result, RedirectAttributes attributes){
 		ModelAndView mv = new ModelAndView("redirect:/home");
 		if(result.hasErrors()){
 			return newBugReportTicket(bugReportTicket, bugReportTicket.getUrl());

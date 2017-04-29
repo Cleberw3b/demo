@@ -18,20 +18,20 @@ import org.hibernate.validator.constraints.NotBlank;
  * @see @Entity
  */
 @Entity
-public class BugReportTicket extends AbstractModelClass{
+public class BugReport extends AbstractModelClass{
 
 	/**
 	 * Here is the variables and their validator
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank (message = "Please inform a ticket title")
+	@NotBlank (message = "{NotEmpty.user.username}")
 	private String title;
 	
-	@NotBlank (message = "Which page there is a bug?")
+	@NotBlank (message = "{NotEmpty.user.url}")
 	private String url;
 	
-	@NotBlank (message = "Please describe behavior in order to fix this bug")
+	@NotBlank (message = "{NotEmpty.user.description}")
 	private String description;
 	
 	/**
@@ -44,6 +44,19 @@ public class BugReportTicket extends AbstractModelClass{
 	private boolean done;
 	
 	private Date closedDate;
+	
+	public BugReport(String title, String url, String description, User user, boolean done, Date closedDate) {
+		super();
+		this.title = title;
+		this.url = url;
+		this.description = description;
+		this.user = user;
+		this.done = done;
+		this.closedDate = closedDate;
+	}
+
+	public BugReport() {
+	}
 
 	public String getTitle() {
 		return title;

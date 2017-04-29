@@ -30,13 +30,16 @@
            			<span th:text="${msg}"></span>
            		</div>
            		<div>
-           			<form th:action="@{/resendEmailVerification}" method="post">
-           				<button type="submit" class="btn btn-default" th:text="#{label.button.resend}"></button>
+           			<form th:action="@{/buy}" method="post" enctype="utf8">
+           				<span class="input-group-addon" id="price" th:text="#{label.field.price}"></span>
+						<input type="text" class="form-control" placeholder="PRICE" name="price"/>
+           				<button type="submit" class="btn btn-default" onclick="buy()" th:text="#{label.button.buy}"></button>
 					</form>
            		</div>
 			</div>
 		</div>
 	</div>
+	<script src="/static/js/buy.js" th:src="@{/js/buy.js}" type="text/javascript" th:type="text/javascript"></script>
 	<article class="b-page1_top"></article>
 	<!--/*/ <th:block th:include="fragments/scripts :: scripts"></th:block> /*/-->
 </body>

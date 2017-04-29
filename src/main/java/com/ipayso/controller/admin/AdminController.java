@@ -5,6 +5,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,7 +37,7 @@ public interface AdminController<T> {
 	 * @see RedirectAttributes
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ModelAndView save(T object, BindingResult result, RedirectAttributes attributes);
+	public ModelAndView save(T object, BindingResult result, RedirectAttributes attributes, WebRequest request);
 	
 	/**
 	 * This method will perform creation of an object of type <T>
@@ -44,7 +45,7 @@ public interface AdminController<T> {
 	 * @return ModelAndView
 	 */
 	@RequestMapping("/add")
-	public ModelAndView add(T object);
+	public ModelAndView add(T object, WebRequest request);
 	
 	/**
 	 * This method will call the view to edit the object of type <T>
@@ -52,7 +53,7 @@ public interface AdminController<T> {
 	 * @return ModelAndView
 	 */
 	@RequestMapping("/edit/{id}")
-    public ModelAndView edit(Integer id);
+    public ModelAndView edit(Integer id, WebRequest request);
 	
 	/**
 	 * This method will delete the object of type <T>
@@ -60,5 +61,5 @@ public interface AdminController<T> {
 	 * @return ModelAndView
 	 */
 	@RequestMapping("/delete/{id}")
-	public ModelAndView delete(Integer id);
+	public ModelAndView delete(Integer id, WebRequest request);
 }

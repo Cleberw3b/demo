@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -51,6 +52,12 @@ public class SignUpController {
 	private ApplicationEventPublisher eventPublisher;
 	
     /**
+     * Injects MessageSource to capture messages from message.properties
+     */
+	@Autowired
+	private MessageSource messages;
+	
+    /**
      * When filter captures a sign up URL request this method is called to add objects on the view side 
      * @param user
      * @return
@@ -88,8 +95,9 @@ public class SignUpController {
     public ModelAndView saveUser(@Valid UserRegister userRegister, BindingResult result, RedirectAttributes attributes, WebRequest request){
     	
     	User user = new User();
+    	
     	if (!userRegister.getPassword().equals(userRegister.getPasswordConfirm())){
-    		result.addError(new ObjectError("msg", "Password must match"));
+    		result.addError(new ObjectError("msg", messages.getMessage("error.PasswordMatches.user", null, request.getLocale())));
     	}
     	if (result.hasErrors()){
 			return newSignUp(userRegister);
@@ -98,9 +106,10 @@ public class SignUpController {
     		user =  userService.newRegisteredUser(userRegister);
     		eventPublisher.publishEvent(new OnRegistrationCompleteEvent (user, request.getLocale(), request.getContextPath()));
 		} catch (RuntimeException e) {
+			//TODO Tratar a excessao para emails duplicados
             Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
-            	result.addError(new ObjectError("msg", "E-mail already exists"));
+            	result.addError(new ObjectError("msg", messages.getMessage("error.UniqueUsername.email", null, request.getLocale())));
 				return newSignUp(userRegister);
             }
 		}

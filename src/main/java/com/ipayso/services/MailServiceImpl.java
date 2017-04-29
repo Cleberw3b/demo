@@ -25,6 +25,7 @@ public class MailServiceImpl implements MailService {
 	/**
 	 * This is a prefix for construct URLs
 	 */
+	//TODO change from local host to openshift domain
 	private final String URLprefix = "http://localhost:8080";
 
 	/**
@@ -62,7 +63,7 @@ public class MailServiceImpl implements MailService {
     */
     @Override
     public SimpleMailMessage constructConfirmEmailMessage(final String appURL, final Locale locale, final User user, final String token) {
-    	final String subject = "Registration Confirmation";
+    	final String subject = messages.getMessage("message.regConfirmation", null, locale);
     	String confirmationUrl = URLprefix + appURL + "/emailConfirm.html?token=" + token;
     	String message = messages.getMessage("message.regConfirmEmail", null, locale);
     	String messageDisconsiderEmail = messages.getMessage("message.disconsiderEmail", null, locale);
@@ -75,7 +76,7 @@ public class MailServiceImpl implements MailService {
     */
 	@Override
 	public SimpleMailMessage constructResendVerificationTokenEmail(final String contextPath, final Locale locale, final RegistrationToken newToken, final User user) {
-		final String subject = "Resend Registration Token";
+		final String subject = messages.getMessage("message.token.resend", null, locale);
 		final String confirmationUrl = contextPath + "/registrationConfirm.html?token=" + newToken.getToken();
         final String message = messages.getMessage("message.resendToken", null, locale);
         return constructSendEmail(subject, message + " \r\n" + confirmationUrl, user.getEmail());
@@ -86,7 +87,7 @@ public class MailServiceImpl implements MailService {
     */
 	@Override
     public SimpleMailMessage constructResetTokenEmail(final String contextPath, final Locale locale, final String token, final User user) {
-		final String subject = "Reset Password";
+		final String subject = messages.getMessage("message.resetPassword", null, locale);
         final String url = contextPath + "/user/changePassword?id=" + user.getId() + "&token=" + token;
         final String message = messages.getMessage("message.resetPassword", null, locale);
         return constructSendEmail(subject, message + " \r\n" + url, user.getEmail());
@@ -97,7 +98,7 @@ public class MailServiceImpl implements MailService {
     */
 	@Override
 	public SimpleMailMessage constructConfirmationUserRegistered(final Locale locale, final User user) {
-		final String subject = "You have registered on I Pay So";
+		final String subject = messages.getMessage("message.reg", null, locale);
 		final String message = messages.getMessage("message.regSucc", null, locale);
         return constructSendEmail(subject, message + " \r\n", user.getEmail());
 	}

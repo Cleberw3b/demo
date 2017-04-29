@@ -16,33 +16,33 @@ public class UserRegister {
 	 * @see @ValidEmail
 	 */
 	@ValidEmail
-	@NotBlank (message = "E-mail Required")
+	@NotBlank (message = "{NotEmpty.user.email}")
 	String email;
 
-	@NotBlank (message = "Password Required")
+	@NotBlank (message = "{NotEmpty.user.password}")
 	private String password;
 
 	private String passwordConfirm;
 	
-	@NotBlank (message = "Insert Day of Birthday")
+	@NotBlank (message = "{NotEmpty.user.day}")
 	private String day;
 	
-	@NotBlank (message = "Insert Month of Birthday")
+	@NotBlank (message = "{NotEmpty.user.month}")
 	private String month;
 	
-	@NotBlank (message = "Insert Year of Birthday")
+	@NotBlank (message = "{NotEmpty.user.year}")
 	private String year;
 	
-	@NotBlank (message = "Gender Required")
+	@NotBlank (message = "{NotEmpty.user.gender}")
 	private String gender;
 	
-	@NotBlank (message = "Country Required")
+	@NotBlank (message = "{NotEmpty.user.country}")
 	private String country;
 
-	@NotBlank (message = "Bank Required")
+	@NotBlank (message = "{NotEmpty.user.bank}")
 	private String bank;
 
-	@NotBlank (message = "Bank Account Required")
+	@NotBlank (message = "{NotEmpty.user.bank.acc}")
 	private String bank_acc;
 
 	public String getEmail() {

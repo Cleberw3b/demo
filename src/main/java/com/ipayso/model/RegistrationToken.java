@@ -52,7 +52,6 @@ public class RegistrationToken extends AbstractModelClass{
 
     public RegistrationToken(String token, User user) {
         super();
-
         this.token = token;
         this.user = user;
         this.expiryDate = calculateExpiryDate(EXPIRATION);

@@ -1,4 +1,4 @@
-package com.ipayso.model.util;
+package com.ipayso.util;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -61,17 +61,21 @@ public class SuccessRegistrationController {
 		String result = registrationTokenService.validateVerificationToken(token);
 		ModelAndView mv = new ModelAndView();
 		if (result.equals("valid")) {
-			mv.addObject("msg",  messages.getMessage("message.regSucc", null, locale));
+			mv.addObject("msgSuccess",  messages.getMessage("message.regSucc", null, locale));
 			SimpleMailMessage email = mailService.constructConfirmationUserRegistered(locale, registrationTokenService.getByToken(token).getUser());
 			mailService.sendEmail(email);
 			mv.setViewName("/login");
 			return mv;
 		}
-
 		mv.addObject("msg", messages.getMessage("auth.message." + result, null, locale));
-		mv.addObject("expired", "expired".equals(result));
-		mv.addObject("token", token);
-		mv.setViewName("/badUser");
+		if (result.equals("expired")){
+			mv.addObject("token", token);
+			mv.addObject("expired", true);			
+			mv.setViewName("/badUser");
+		} else {
+			mv.addObject("invalid", true);
+			mv.setViewName("/signup");
+		}
 		return mv;
 	}
 	

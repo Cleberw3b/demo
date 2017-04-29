@@ -1,24 +1,12 @@
 package com.ipayso.config;
 
-import java.util.Locale;
-
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 /**
  * SpringWebConfig.class -> Here we 
@@ -26,15 +14,42 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
  * @version 1.0
  * @see @Configuration
  */
-//@Configuration
-//@EnableWebMvc
-//@ComponentScan
-public class SpringWebConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware{
+
+@Configuration
+@EnableWebMvc
+public class SpringWebConfig extends WebMvcConfigurerAdapter{
 	
-    
     /**
-     * TODO
+     * Injects LocalValidatorFactoryBean to manager validation
      */
+	@Autowired
+	private LocalValidatorFactoryBean validator;
+	
+    /**
+     * Make static resources available for all application
+     */
+	@Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
+        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
+        registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:/static/fonts/");
+    }
+	
+	/**
+	 * Make the validator factory with messages available
+	 */
+	@Override
+	public Validator getValidator(){
+	    return validator;
+	}
+	
+	
+
+	
+	
+	/*
 
     private ApplicationContext applicationContext;
 
@@ -98,7 +113,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
      * templates to be automatically updated when modified.
      * @return SpringResourceTemplateResolver
      */
-    
+	/*
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -115,6 +130,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
      * enables Spring's own MessageSource message resolution mechanisms.
      * @return SpringTemplateEngine
      */
+	/*
    @Bean
     public SpringTemplateEngine templateEngine(){
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
@@ -126,10 +142,12 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
      * Set a ThymeleafViewResolver in order to manage templates requests
      * @return ThymeleafViewResolver
      */
+	/*
     @Bean
     public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
     }
+    */
 }

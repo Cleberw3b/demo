@@ -4,21 +4,23 @@
 </head>
 <body th:fragment="scripts">
 	<footer>
-		<div class="copyright col-md-6">© 2017 - IPaySo. All rights reserved.</div>
+		<div class="copyright col-md-6"><spam th:text="#{label.copyright}"></spam></div>
 	
 		<div class="col-md-6">
-			<button type="button" class="btn btn-bugReport" id="bugReportButton"><a th:href="@{'/bugReport?path=' + ${#httpServletRequest.requestURI}}" >Report a Bug</a></button>		
+			<button type="button" class="btn btn-bugReport" id="bugReportButton">
+				<a th:href="@{'/bugReport?path=' + ${#httpServletRequest.requestURI}}" th:text="#{label.button.bugReport}"></a>
+			</button>		
 		</div>	
 	</footer>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	
-	<script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+	<script src="/static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 	
 	<script th:inline="javascript">
 		$(document).ready(function(){
 		    $('.logo-img').click(function(){
-		        window.location= "/devipayso-1.0/home";
+		        window.location= "/home";
 		    });
 		});
 	</script>

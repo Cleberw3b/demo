@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -14,14 +15,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ipayso.model.Customer;
 import com.ipayso.model.User;
-import com.ipayso.model.util.PageWrapper;
 import com.ipayso.services.CustomerService;
 import com.ipayso.services.UserService;
+import com.ipayso.util.PageWrapper;
 import com.ipayso.util.enums.Countries;
 import com.ipayso.util.enums.Days;
 import com.ipayso.util.enums.Genders;
@@ -62,6 +64,12 @@ public class CustomerController implements AdminController<Customer>{
 	@Autowired
 	private BirthdayFormat format;
 
+    /**
+     * Injects MessageSource to capture messages from message.properties
+     */
+	@Autowired
+	private MessageSource messages;
+	
 	/**
 	 * List all Customer and put into view
 	 */
@@ -81,10 +89,10 @@ public class CustomerController implements AdminController<Customer>{
 	 * Persist Customer
 	 */
 	@Override
-	public ModelAndView save(@Valid Customer customer, BindingResult result, RedirectAttributes attributes) {
+	public ModelAndView save(@Valid Customer customer, BindingResult result, RedirectAttributes attributes, WebRequest request) {
 		ModelAndView mv= new ModelAndView("redirect:/customers");
 		if (result.hasErrors()){
-			return add(customer);
+			return add(customer, request);
     	}
 		try {
 			User user = userService.getUserByEmail(customer.getUser().getEmail());
@@ -95,11 +103,11 @@ public class CustomerController implements AdminController<Customer>{
 		} catch (Exception e) {
 			Throwable rootCause = com.google.common.base.Throwables.getRootCause(e);
             if (rootCause instanceof SQLException) {
-            	result.addError(new ObjectError("msg", "E-mail already exists"));
-            	return add(customer);
+            	result.addError(new ObjectError("msg", messages.getMessage("error.UniqueUsername.email", null, request.getLocale())));
+            	return add(customer,request);
             }
 		}
-		mv.addObject("msg", "Customer saved successfully");
+		mv.addObject("msg", messages.getMessage("message.customer.saved.success", null, request.getLocale()));
 		return mv;
 	}
 
@@ -107,12 +115,12 @@ public class CustomerController implements AdminController<Customer>{
 	 * Call the add form to create new Customer
 	 */
 	@Override
-	public ModelAndView add(Customer customer) {
+	public ModelAndView add(Customer customer, WebRequest request) {
 		if(customer == null){
 			customer = new Customer();			
 		}
 		ModelAndView mv = new ModelAndView("customersForm");
-		mv.addObject("title", "Add New Customer");
+		mv.addObject("title", messages.getMessage("message.customer.title.add", null, request.getLocale()));
 		mv.addObject("roles", Arrays.asList(Role.values()));
     	mv.addObject("genders", Arrays.asList(Genders.values()));
     	mv.addObject("months", Arrays.asList(Months.values()));
@@ -123,8 +131,7 @@ public class CustomerController implements AdminController<Customer>{
 		List<String> usersEmail = userService.listAllHasNoCustomer();			
 		mv.addObject("users", usersEmail);
 		if(usersEmail.isEmpty()){
-			String msg = "There is no email avaliable to link, Please insert users before create a Customer";
-			return new ModelAndView("redirect:/customers?msg=" + msg);
+			return new ModelAndView("redirect:/customers?msg=" + messages.getMessage("message.customer.noUserToLink", null, request.getLocale()));
 		}
 		return mv;
 	}
@@ -133,10 +140,10 @@ public class CustomerController implements AdminController<Customer>{
 	 * Call the edit form to edit Customer by its id
 	 */
 	@Override
-	public ModelAndView edit(@PathVariable Integer id) {
+	public ModelAndView edit(@PathVariable Integer id, WebRequest request) {
 		Customer customer = customerService.getById(id);
 		ModelAndView mv = new ModelAndView("customersForm");
-		mv.addObject("title", "Add New Customer");
+		mv.addObject("title", messages.getMessage("message.customer.title.edit", null, request.getLocale()));
 		mv.addObject("roles", Arrays.asList(Role.values()));
     	mv.addObject("genders", Arrays.asList(Genders.values()));
     	mv.addObject("months", Arrays.asList(Months.values()));
@@ -151,10 +158,10 @@ public class CustomerController implements AdminController<Customer>{
 	 * Delete a Customer by its id
 	 */
 	@Override
-	public ModelAndView delete(@PathVariable Integer id) {
+	public ModelAndView delete(@PathVariable Integer id, WebRequest request) {
 		customerService.delete(id);
 		ModelAndView mv = new ModelAndView("redirect:/customers");
-		mv.addObject("msg", "Customer Deleted");
+		mv.addObject("msg", messages.getMessage("message.customer.deleted", null, request.getLocale()));
 		return mv;
 	}
 }

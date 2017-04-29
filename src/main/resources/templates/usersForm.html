@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-<title>I Pay So</title>
+<title th:text="#{label.title}"></title>
 <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
-<!--/*/ <th:block th:include="fragments/head2 :: head2"></th:block> /*/-->
-<!--/*/ <th:block th:include="fragments/head3 :: head3"></th:block> /*/-->
 
 </head>
 <body>
@@ -13,7 +11,7 @@
 		<div class="row">
 			<div class="col-lg-12 top-menu-bar">
 				<div class="logo-ipayso">
-					<img src="../../static/images/logo-ipayso.png" th:src="@{../images/logo-ipayso.png}" alt="logo ipayso" class="logo-img"/>
+					<img src="/static/images/logo-ipayso.png" th:src="@{/images/logo-ipayso.png}" alt="logo ipayso" class="logo-img"/>
 				</div>
 			</div>
 		</div>
@@ -37,15 +35,15 @@
            					<span th:text="${msg}"></span>
            				</div>
            				<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('email')} ? has-error">
-							 <span class="input-group-addon" id="email">Email: </span>
+							 <span class="input-group-addon" id="email" th:text="#{label.field.email}"></span>
 							 <input type="text" class="form-control" placeholder="E-mail (as username)" th:field="*{email}" aria-describedby="email"/>
 						</div>
            				<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('password')} ? has-error">
-							 <span class="input-group-addon" id="password">Password: </span>
+							 <span class="input-group-addon" id="password" th:text="#{label.field.password}"></span>
 							 <input type="text" class="form-control" placeholder="Password" th:field="*{password}" aria-describedby="email"/>
 						</div>
 						<div class="row radio-margin">
-							<span class="input-group-addon" id="password" style="text-align: center; margin: auto;">Roles: </span>
+							<span class="input-group-addon" id="password" style="text-align: center; margin: auto;" th:text="#{label.field.role}"></span>
 							<div class="col-lg-3" th:each= "role : ${roles}">
 								 <div class="input-group">
 									 <span class="input-group-addon" >
@@ -61,7 +59,7 @@
 									<span class="input-group-addon">
 										<input type="checkbox" th:value="true" th:field="*{enabled}"/>
 									</span>
-									<span class="form-control" th:text="Enable" ></span>
+									<span class="form-control" th:text="#{label.field.enable}"></span>
 								</div>
 							</div>
 						</div>
@@ -71,12 +69,13 @@
 									<span class="input-group-addon">
 										<input type="checkbox" th:value="true" th:field="*{accountLocked}"/>
 									</span>
-									<span class="form-control" th:text="Lock" ></span>
+									<span class="form-control" th:text="#{label.field.locked}" ></span>
 								</div>
 							</div>
 						</div>
 						<div class="row">
-							<button type="submit" class="btn btn-default">Submit</button>
+							<button type="submit" class="btn btn-default" th:text="#{label.button.submit}"></button>
+							<button type="button" class="btn btn-default"><a th:href="@{/users}" th:text="#{label.button.cancel}"></a></button>
 						</div>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
 					</form>
@@ -85,7 +84,5 @@
 		</div>
 	</div>
 	<!--/*/ <th:block th:include="fragments/scripts :: scripts"></th:block> /*/-->
-	<!--/*/ <th:block th:include="fragments/scripts2 :: scripts2"></th:block> /*/-->
-	<!--/*/ <th:block th:include="fragments/scripts3 :: scripts3"></th:block> /*/-->
 </body>
 </html>

@@ -3,16 +3,16 @@ package com.ipayso.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.ipayso.model.BugReportTicket;
+import com.ipayso.model.BugReport;
 
 /**
  * BugReportTicketService.class -> This interface extends all methods from CRUDService
  * @author Cleber Oliveira
  * @version 1.0
  * @see CRUDService
- * @see BugReportTicket
+ * @see BugReport
  */
-public interface BugReportTicketService extends CRUDService<BugReportTicket>{
+public interface BugReportService extends CRUDService<BugReport>{
 	
 	/**
 	 * Find all BugReportTicket and make it pageable
@@ -20,12 +20,12 @@ public interface BugReportTicketService extends CRUDService<BugReportTicket>{
 	 * @return Page<BugReportTicket>
 	 * @see Pageable
 	 */
-	Page<BugReportTicket> listAll(Pageable pageable);
+	Page<BugReport> listAll(Pageable pageable);
 	
 	/**
 	 * Persist BugReportTicket instance
 	 * @param bug
 	 * @return BugReportTicket
 	 */
-	BugReportTicket saveNewBug(BugReportTicket bug);
+	BugReport saveNewBug(BugReport bug);
 }

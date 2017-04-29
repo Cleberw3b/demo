@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
 
-<title>I Pay So</title>
+<title th:text="#{label.title}"></title>
 <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
-<!--/*/ <th:block th:include="fragments/head2 :: head2"></th:block> /*/-->
-<!--/*/ <th:block th:include="fragments/head3 :: head3"></th:block> /*/-->
 
 </head>
 <body>
@@ -13,7 +11,7 @@
 		<div class="row">
 			<div class="col-lg-12 top-menu-bar">
 				<div class="logo-ipayso">
-					<img src="../../static/images/logo-ipayso.png" th:src="@{../images/logo-ipayso.png}" alt="logo ipayso" class="logo-img"/>
+					<img src="/static/images/logo-ipayso.png" th:src="@{/images/logo-ipayso.png}" alt="logo ipayso" class="logo-img"/>
 				</div>
 			</div>
 		</div>
@@ -38,54 +36,54 @@
 	        				<span th:text="${msg}"></span>
 	        			</div>
 	           			<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('username')} ? has-error">
-							 <span class="input-group-addon" id="username">Username: </span>
+							 <span class="input-group-addon" id="username" th:text="#{label.field.username}"></span>
 							 <input type="text" class="form-control" placeholder="Username" th:field="*{username}" aria-describedby="username"/>
 						</div>
 	           			<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('country')} ? has-error">
-							 <span class="input-group-addon">Country: </span>
+							 <span class="input-group-addon" th:text="#{label.field.country}"></span>
 							 <select class="form-control" th:field="*{country}">
 						    	<option placeholder="#{label.signup.countries}"
 											th:each="country : ${countries}" 
 									        th:value="${country.description}" 
-									        th:text="${country.description}">Country</option>
+									        th:text="${country.description}"></option>
 						  	</select>
 						</div>
 	           			<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('bank')} ? has-error">
-							 <span class="input-group-addon" id="bank">Bank: </span>
+							 <span class="input-group-addon" id="bank" th:text="#{label.field.bank}"></span>
 							 <input type="text" class="form-control" placeholder="Bank" th:field="*{bank}" aria-describedby="bank"/>
 						</div>
 	           			<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('bank_acc')} ? has-error">
-							 <span class="input-group-addon" id="bank_acc">Bank Account: </span>
+							 <span class="input-group-addon" id="bank_acc" th:text="#{label.field.bank.acc}"></span>
 							 <input type="text" class="form-control" placeholder="Bank Account" th:field="*{bank_acc}" aria-describedby="bank_acc"/>
 						</div>
 						<div class="row" th:classappend="${#fields.hasErrors('month') or
 														 #fields.hasErrors('day') or 
 														 #fields.hasErrors('year')} ?  has-error">
 							<div class="input-group input-group-lg col-lg-4">
-								<span class="input-group-addon">Month: </span>
+								<span class="input-group-addon" th:text="#{label.field.month}"></span>
 								<select class="form-control" th:field="*{month}">
 									<option placeholder="#{label.signup.month}"
 											th:each="month : ${months}" 
 									        th:value="${month.description}" 
-									        th:text="${month.description}">Month</option>
+									        th:text="${month.description}"></option>
 								</select>
 							</div>
 							<div class="input-group input-group-lg col-lg-4">
-								<span class="input-group-addon">Day: </span>
+								<span class="input-group-addon" th:text="#{label.field.day}"></span>
 								<select class="form-control" th:field="*{day}">
 									<option placeholder="#{label.signup.day}"
 											th:each="day : ${days}" 
 									        th:value="${day.description}" 
-									        th:text="${day.description}">Day</option>
+									        th:text="${day.description}"></option>
 								</select>
 							</div>
 							<div class="input-group input-group-lg col-lg-4">
-								<span class="input-group-addon">Year: </span>
+								<span class="input-group-addon" th:text="#{label.field.year}"></span>
 								<select class="form-control" th:field="*{year}">
 									<option placeholder="#{label.signup.year}"
 											th:each="year : ${years}" 
 									        th:value="${year.description}" 
-									        th:text="${year.description}">Day</option>
+									        th:text="${year.description}"></option>
 								</select>
 							</div>
 							
@@ -113,20 +111,20 @@
 						</div>
 						
 						<div class="input-group input-group-lg" th:classappend="${#fields.hasErrors('user')} ? has-error">
-							 <span class="input-group-addon">User's Email: </span>
+							 <span class="input-group-addon" th:text="#{label.field.user.email}"></span>
 							 <select class="form-control" th:field="*{user.email}">
 						    	<option placeholder="User's Email"
 											th:each="email : ${users}" 
 									        th:value="${email}" 
-									        th:text="${email}">User's Email</option>
+									        th:text="${email}"></option>
 						  	</select>
 						</div>
 						
 						
 						 
 						<div class="row">
-							<button type="submit" class="btn btn-default">Submit</button>
-							<button type="button" class="btn btn-default"><a th:href="@{/customers}" >Cancel</a></button>
+							<button type="submit" class="btn btn-default" th:text="#{label.button.submit}"></button>
+							<button type="button" class="btn btn-default"><a th:href="@{/customers}" th:text="#{label.button.cancel}"></a></button>
 						</div>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					 </div>
@@ -135,7 +133,5 @@
 		</div>
 	</div>
 	<!--/*/ <th:block th:include="fragments/scripts :: scripts"></th:block> /*/-->
-	<!--/*/ <th:block th:include="fragments/scripts2 :: scripts2"></th:block> /*/-->
-	<!--/*/ <th:block th:include="fragments/scripts3 :: scripts3"></th:block> /*/-->
 </body>
 </html>

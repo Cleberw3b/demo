@@ -38,10 +38,10 @@ public class User extends AbstractModelClass{
 	 */
 	@Column(unique = true)
 	@ValidEmail
-	@NotBlank (message = "E-mail Required")
+	@NotBlank (message = "{NotEmpty.user.email}")
 	String email;
 
-	@NotBlank (message = "Password Required")
+	@NotBlank (message = "{NotEmpty.user.password}")
 	private String password;
 	
 	/**
@@ -51,7 +51,7 @@ public class User extends AbstractModelClass{
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", updatable = true, insertable = true)
 	private Customer customer;
 	
-	@NotBlank (message = "Role Required")
+	@NotBlank (message = "{NotEmpty.user.role}")
 	private String role;
 
 	private boolean enabled;
@@ -59,6 +59,23 @@ public class User extends AbstractModelClass{
 	private boolean accountExpired;
 
 	private boolean accountLocked;
+
+	
+	
+	public User(String email, String password, Customer customer, String role, boolean enabled, boolean accountExpired,
+			boolean accountLocked) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.customer = customer;
+		this.role = role;
+		this.enabled = enabled;
+		this.accountExpired = accountExpired;
+		this.accountLocked = accountLocked;
+	}
+
+	public User() {
+	}
 
 	public String getEmail() {
 		return email;

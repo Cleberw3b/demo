@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
@@ -55,6 +56,17 @@ public class CommonBeanConfig {
     	resolver.setCookieName("myLocaleCookie");
     	resolver.setCookieMaxAge(4800);
     	return resolver;
+    }
+    
+    /**
+     * This bean insert messageSource to be used to validate models
+     * @return LocalValidatorFactoryBean
+     */
+    @Bean
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean validatorFactory = new LocalValidatorFactoryBean();
+        validatorFactory.setValidationMessageSource(messageSource());
+        return validatorFactory;
     }
     
     /**

@@ -4,16 +4,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
-import com.ipayso.model.BugReportTicket;
+import com.ipayso.model.BugReport;
 /**
  * BugReportTicketRepository.class -> This interface is a repository for BugReportTicket,
  * 									  any BugReportTicket instance is allowed to use CrudRepository methods
  * @author Cleber Oliveira
  * @version 1.0
  * @see CrudRepository
- * @see BugReportTicket
+ * @see BugReport
  */
-public interface BugReportTicketRepository extends CrudRepository<BugReportTicket, Integer>{
+public interface BugReportRepository extends CrudRepository<BugReport, Integer>{
 	
 	/**
 	 * Find all BugReportTicket and make it pageable
@@ -21,5 +21,5 @@ public interface BugReportTicketRepository extends CrudRepository<BugReportTicke
 	 * @return Page<BugReportTicket>
 	 * @see Pageable
 	 */
-	Page<BugReportTicket> findAll(Pageable pageable);
+	Page<BugReport> findAll(Pageable pageable);
 }

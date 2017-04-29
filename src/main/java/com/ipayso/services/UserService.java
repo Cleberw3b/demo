@@ -18,7 +18,7 @@ import com.ipayso.model.UserRegister;
 public interface UserService extends CRUDService<User>{
 	
 	/**
-	 * Find all User
+	 *  * Find all User
 	 * @return List<User>
 	 */
     List<User> listAll();

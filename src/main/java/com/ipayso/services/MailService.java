@@ -60,5 +60,4 @@ public interface MailService {
 	 * @param email
 	 */
 	void sendEmail(SimpleMailMessage email);
-	
 }

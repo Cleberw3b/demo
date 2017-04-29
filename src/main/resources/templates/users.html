@@ -11,14 +11,14 @@
 			<div class="row">
 				<div class="col-lg-12 top-menu-bar">
 					<div class="logo-ipayso">
-						<img src="../static/images/logo-ipayso.png" th:src="@{images/logo-ipayso.png}" alt="logo ipayso" class="logo-img"/>
+						<img src="/static/images/logo-ipayso.png" th:src="@{/images/logo-ipayso.png}" alt="logo ipayso" class="logo-img"/>
 					</div>
 				</div>
 			</div>
 		</div>
 	    <div class="container-fluid">
 	    	<div class="row" style="text-align: center;">
-		        <h1>Admin Area</h1>
+		        <h1 th:text="#{label.title.adminArea}"></h1>
 	        </div>
 	         <div class="alert alert-info"  th:if="${not #strings.isEmpty(msg)}">
      			<span th:text="${msg}"></span>
@@ -26,32 +26,32 @@
 	        <div class="row">
 	        	<div class="row" style="padding: 30px">	        	
 		        	<div style="float: left;">
-			            <button type="button" class="btn"><a th:href="@{/home}" >Home</a></button>
+			            <button type="button" class="btn"><a th:href="@{/home}" th:text="#{label.admin.table.home}"></a></button>
 		            </div>
 		           	<div style="float: left; margin-left: 5px;">
-			            <button type="button" class="btn"><a th:href="@{/users/add}" >Add</a></button>	
+			            <button type="button" class="btn"><a th:href="@{/users/add}" th:text="#{label.admin.table.add}"></a></button>	
 		            </div>
 	        	</div>
 	        	<div class="row panel panel-default">
-	            	<div class="panel-heading">Users</div>
+	            	<div class="panel-heading" th:text="#{label.admin.table.user.title}"></div>
 			        <table class="table table-striped">
 				        <tr>
-			                <td th:text="ID">ID</td>
-			                <td th:text="Email">Email</td>
-			                <td th:text="Enabled">Enabled</td>
-			                <td th:text="Locked">Locked</td>
-			                <td th:text="Role">Role</td>
-			                <td th:text="Action">Action></td>
-			                <td th:text="Action">Action></td>
+			                <td th:text="#{label.admin.table.id}"></td>
+			                <td th:text="#{label.admin.table.email}"></td>
+			                <td th:text="#{label.admin.table.id}"></td>
+			                <td th:text="#{label.admin.table.id}"></td>
+			                <td th:text="#{label.admin.table.role}"></td>
+			                <td th:text="#{label.admin.table.action}"></td>
+			                <td th:text="#{label.admin.table.action}"></td>
 			            </tr>
 				        <tr th:each="user : ${users}">
-			                <td th:text="${user.id}">ID</td>
-			                <td th:text="${user.email}">Email</td>
-			                <td th:text="${user.enabled}">Enabled</td>
-			                <td th:text="${user.accountLocked}">Locked</td>
-			                <td th:text="${user.role}">Role</td>
-			                <td><a th:href="@{'/users/edit/' + ${user.id}}">Edit</a></td>
-			                <td><a th:href="@{'/users/delete/' + ${user.id}}">Delete</a></td>
+			                <td th:text="${user.id}"></td>
+			                <td th:text="${user.email}"></td>
+			                <td th:text="${user.enabled}"></td>
+			                <td th:text="${user.accountLocked}"></td>
+			                <td th:text="${user.role}"></td>
+			                <td><a th:href="@{'/users/edit/' + ${user.id}}" th:text="#{label.admin.table.edit}"></a></td>
+			                <td><a th:href="@{'/users/delete/' + ${user.id}}" th:text="#{label.admin.table.delete}"></a></td>
 			            </tr>
 		            </table>
             	</div>

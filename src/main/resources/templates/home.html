@@ -11,10 +11,10 @@
 	    <div class="jumbotron">
 	    	<div class="row" style="margin-top: -10px">
 		    	<div style="float: left;">
-			        <img src="../static/images/logo-ipayso.png" width="60" th:src="@{images/logo-ipayso.png}"/>	    	
+					<img src="/static/images/logo-ipayso.png" th:src="@{/images/logo-ipayso.png}" alt="logo ipayso" class="logo-img" width= "60"/>
 		    	</div>
 		    	<div style="margin: auto; text-align: center">
-			        <h2>Welcome!!!</h2>
+			        <h2 th:text="#{label.welcome}"></h2>
 		    	</div>	    	
 	    	</div>
 	       
@@ -22,8 +22,9 @@
 	        
 		        <table class="table table-striped">
 		            <tr>
-		                <th><a th:href="@{/login}" >Login</a></th>
-		                <th><a th:href="@{/signup}">Sign Up</a></th>
+		                <th><a th:href="@{/login}" th:text="#{label.login}"></a></th>
+		                <th><a th:href="@{/signup}" th:text="#{label.signup}"></a></th>
+		                <th><a th:href="@{/buyTicket}" th:text="#{label.ticket}"></a></th>
 		            </tr>
 	            </table>
 	        </div>
@@ -35,15 +36,15 @@
 	        <div class="row">
 	        	<div class="col-lg-6">
 		        	<div class="row" style="text-align: center; margin: auto">
-			        	<spam style="text-align: center; font-size: 30px">Admin Area</spam>
+			        	<spam style="text-align: center; font-size: 30px" th:text="#{label.title.adminArea}"></spam>
 		        	</div>
 		        	<br/>
 	       			<br/>
 			        <div class="row">
 			        	<ul class="list-group">
-			        		<li class="list-group-item"><a th:href="@{/users}" >Users</a></li>
-			        		<li class="list-group-item"><a th:href="@{/customers}">Customers</a></li>
-			        		<li class="list-group-item"><a th:href="@{/bugs}">Bugs Ticket</a></li>
+			        		<li class="list-group-item"><a th:href="@{/users}" th:text="#{label.users}"></a></li>
+			        		<li class="list-group-item"><a th:href="@{/customers}" th:text="#{label.customers}"></a></li>
+			        		<li class="list-group-item"><a th:href="@{/bugs}" th:text="#{label.bugs.ticket}"></a></li>
 			        	</ul>
 			        </div>
 	        	</div>

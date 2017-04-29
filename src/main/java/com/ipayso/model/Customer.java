@@ -1,6 +1,9 @@
 package com.ipayso.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -45,22 +48,53 @@ public class Customer extends AbstractModelClass{
 	@Transient
 	private String year;
 	
-	@NotBlank (message = "Gender Required")
+	@NotBlank (message = "{NotEmpty.user.gender}")
 	private String gender;
 	
-	@NotBlank (message = "Country Required")
+	@NotBlank (message = "{NotEmpty.user.country}")
 	private String country;
 
-	@NotBlank (message = "Bank Required")
+	@NotBlank (message = "{NotEmpty.user.bank}")
 	private String bank;
 
-	@NotBlank (message = "Bank Account Required")
+	@NotBlank (message = "{NotEmpty.user.bank.acc}")
 	private String bank_acc;
 
 	private String question1;
 
 	private String question2;
+	
+	@OneToOne (targetEntity = Account.class, fetch = FetchType.EAGER , cascade = {CascadeType.ALL})
+	@JoinColumn(name = "account_id", referencedColumnName = "id", updatable = true, insertable = true)
+	private Account account;
+	
+	@OneToOne (mappedBy="customer")
+	private Ticket ticket;
+	
+	public Customer(User user, String username, String birthday, String role, String day, String month, String year,
+			String gender, String country, String bank, String bank_acc, String question1, String question2,
+			Account account, Ticket ticket) {
+		super();
+		this.user = user;
+		this.username = username;
+		this.birthday = birthday;
+		this.role = role;
+		this.day = day;
+		this.month = month;
+		this.year = year;
+		this.gender = gender;
+		this.country = country;
+		this.bank = bank;
+		this.bank_acc = bank_acc;
+		this.question1 = question1;
+		this.question2 = question2;
+		this.account = account;
+		this.ticket = ticket;
+	}
 
+	public Customer(){
+	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -164,5 +198,20 @@ public class Customer extends AbstractModelClass{
 	public void setYear(String year) {
 		this.year = year;
 	}
-	
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public Ticket getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(Ticket ticket) {
+		this.ticket = ticket;
+	}
 }

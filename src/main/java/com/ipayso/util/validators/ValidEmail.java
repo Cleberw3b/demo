@@ -12,8 +12,6 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.ipayso.util.validators.EmailValidator;
-
 /**
  * ValidEmail.class -> Here create a Annotation as @ValidEmail to validate e-mail on field which will be validated by EmailValidator
  * @author Cleber Oliveira
@@ -30,7 +28,7 @@ import com.ipayso.util.validators.EmailValidator;
 @Documented
 public @interface ValidEmail {
 	
-	String message() default "Invalid email";
+	String message() default "{ValidEmail.email.invalid}";
     Class<?>[] groups() default {}; 
     Class<? extends Payload>[] payload() default {};
 }
